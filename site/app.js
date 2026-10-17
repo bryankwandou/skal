@@ -191,8 +191,7 @@
     $("#proof-slot").textContent = p.slot ? t("reading", { slot: fmt(p.slot) }) : "";
     $("#proof-note").textContent = p.state === "error" ? t("offline", { net: p.net }) : pending ? t("pendingNote") : p.net === "devnet" ? t("devNote") : "";
     {
-      const dot = $("#hero-dot"), st = $("#hero-status");
-      dot.classList.toggle("on", p.state === "ok");
+      const st = $("#hero-status");
       st.textContent = p.state === "ok" ? t("live", { net: p.net, slot: fmt(p.slot) }) : p.state === "error" ? t("offline", { net: p.net }) : t("checking", { net: p.net });
     }
   }

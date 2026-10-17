@@ -86,7 +86,7 @@ window.I18N = {
   },
   js: {
     en: {
-      checking: "Checking {net}…", live: "Live on Solana {net} · slot {slot}", offline: "Could not reach {net}. Values may be stale.",
+      checking: "Checking {net}…", live: "Read from Solana {net} at slot {slot}", offline: "Could not reach {net}. Values may be stale.",
       empty: "Empty", set: "Set to {a}", notLaunched: "Not launched yet", deployed: "Deployed · {n} bytes", missing: "Not deployed yet",
       reading: "slot {slot}", pendingNote: "Mainnet mint is not launched yet. The reserved vault address is shown; it will read as deployed once the launch transaction lands.",
       devNote: "Devnet values come from a demo launch whose vesting started 30 days ago, so part of the vault is already releasable.",
@@ -99,7 +99,7 @@ window.I18N = {
       locked: "{p}% locked", lPool: "Meteora pool", lMint: "SKAL mint", lVault: "Vault program", lVaultTok: "Vault token account", lHash: "Binary SHA-256",
     },
     id: {
-      checking: "Mengecek {net}…", live: "Aktif di Solana {net} · slot {slot}", offline: "Tidak bisa menghubungi {net}. Nilai bisa jadi usang.",
+      checking: "Mengecek {net}…", live: "Dibaca dari Solana {net} di slot {slot}", offline: "Tidak bisa menghubungi {net}. Nilai bisa jadi usang.",
       empty: "Kosong", set: "Terisi: {a}", notLaunched: "Belum diluncurkan", deployed: "Ter-deploy · {n} byte", missing: "Belum di-deploy",
       reading: "slot {slot}", pendingNote: "Mint mainnet belum diluncurkan. Yang tampil adalah alamat vault yang sudah dipesan; statusnya berubah begitu transaksi peluncuran masuk.",
       devNote: "Nilai devnet berasal dari peluncuran demo yang vesting-nya sudah berjalan 30 hari, jadi sebagian isi vault sudah bisa dilepas.",
