@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  sbf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Agave CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/v4.1.2/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+      - name: Build vault (SBPF v3)
+        working-directory: vault
+        run: cargo build-sbf --arch v3
+      - name: Strip and report
+        run: |
+          python3 scripts/strip_elf.py vault/target/deploy/skal_vault.so vault/target/deploy/skal_vault.min.so
+          stat -c "skal_vault.min.so: %s bytes" vault/target/deploy/skal_vault.min.so
+          sha256sum vault/target/deploy/skal_vault.min.so
+      - name: Build Ringan (SBPF v3)
+        run: cargo build-sbf --arch v3
+
+  client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - run: npm ci
+        working-directory: client
+      - name: Syntax check
+        working-directory: client
+        run: for f in *.mjs; do node --check "$f"; done

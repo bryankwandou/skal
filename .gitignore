@@ -1,0 +1,26 @@
+# Build output
+target/
+*.min.so
+
+# Dependencies
+client/node_modules/
+
+# Keypairs: never commit. Every file in keys/ is a local test key.
+keys/
+*-keypair.json
+
+# Local validator and debug artifacts
+.ledger/
+ledger/
+test-ledger/
+validator.log
+dis*.txt
+
+# Per-launch records (contain local test addresses)
+client/launch-*.json
+
+# Stale copy of the workspace
+ringan/
+
+# Vercel
+.vercel/
