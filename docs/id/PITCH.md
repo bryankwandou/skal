@@ -26,7 +26,7 @@ Buka tab yang sudah disiapkan:
 2. **Metadata** → nama dan simbol ada di akun mint, update authority kosong.
 3. **Vault token account** → saldo 140.000.000.000 SKAL, pemiliknya PDA program vault.
 4. **Program vault** → Upgradeable: tidak (setelah `--final`).
-5. **Pool + LP** (jika sudah dibuat) → transaksi penguncian atau pembakaran LP.
+5. **Pool + LP** → pool Meteora `9oejCQAK…YPWRe`, posisi LP 100% terkunci permanen (transaksi `5vrwyPRF…`).
 
 ## 2:40 – Penutup (20 detik)
 
@@ -41,4 +41,7 @@ Sewa program vault sendiri 0,0143 SOL. Program token minimal saya (Ringan) cuma 
 Jadwal tersimpan di file peluncuran dan bisa direkonstruksi dari data transaksi peluncuran.
 
 **Apa likuiditasnya dalam?**
-Kedalaman pool bergantung pada modal SOL yang disetor. Yang dijamin kode adalah LP terkunci, tidak ada cetak ulang, tidak ada pembekuan, dan jatah pembuat terkunci 12 bulan.
+Belum. Pool dibuat satu sisi: 700 miliar SKAL dan 0 SOL, jadi biayanya hanya sewa 0,018 SOL. Beli 0,01 SOL menggeser harga sekitar 0,3%, tapi penjualan dibatasi SOL yang sudah dimasukkan pembeli. Karena itu wallet menandai "low liquidity", dan itu benar. Yang dijamin kode adalah LP terkunci 100% selamanya, tidak ada cetak ulang, tidak ada pembekuan, dan jatah pembuat terkunci 12 bulan.
+
+**Kenapa wallet menampilkan "missing file metadata"?**
+URI metadata dibiarkan kosong saat peluncuran, lalu kunci ubah metadata dihapus. Nama dan simbol ada di chain, tapi logo tidak akan pernah bisa ditambahkan. Ini harga dari janji "metadata tidak bisa diganti".

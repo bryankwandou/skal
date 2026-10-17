@@ -8,7 +8,8 @@ Token Token-2022 dengan 14% jatah pembuat dikunci di vault vesting Pinocchio. Na
 |---|---|
 | Supply | 1.000.000.000.000 SKAL (1 triliun), 6 desimal |
 | Vault vesting | 14% = 140 miliar SKAL |
-| Wallet pembuat | 86% = 860 miliar SKAL, sumber likuiditas dan distribusi komunitas |
+| Pool Meteora | 70% = 700 miliar SKAL, posisi LP terkunci permanen |
+| Wallet pembuat | 16% = 160 miliar SKAL untuk distribusi komunitas |
 | Jadwal vault | cliff 90 hari, lalu lepas linear sampai hari ke-365 |
 | Mint authority | dicabut (null) di transaksi peluncuran |
 | Freeze authority | null sejak mint dibuat |
@@ -20,9 +21,11 @@ Token Token-2022 dengan 14% jatah pembuat dikunci di vault vesting Pinocchio. Na
 |---|---|
 | Deploy vault (`skal_vault.min.so`, 2.472 byte) | 0,01430 |
 | Peluncuran: mint, metadata, 2 ATA, 2 mint, cabut authority | 0,00540 |
-| **Total on-chain** | **0,01970** |
+| **Token dan vault** | **0,01970** |
+| Pool DEX Meteora (sewa saja, tanpa setoran SOL) | 0,01800 |
+| **Total on-chain** | **0,03770** |
 
-Di bawah batas diskualifikasi 0,03 SOL. Target 0,01 hanya tercapai oleh program Ringan saja (0,00861 SOL). Paket SKAL lengkap belum bisa turun ke 0,01 karena sewa program vault sendiri sudah 0,0143.
+Token dan vault di bawah batas diskualifikasi 0,03 SOL. Pool di luar anggaran itu. Target 0,01 hanya tercapai oleh program Ringan saja (0,00861 SOL). Paket SKAL lengkap belum bisa turun ke 0,01 karena sewa program vault sendiri sudah 0,0143.
 
 ## Vault
 
@@ -49,18 +52,20 @@ Mencakup supply, authority null, metadata terkunci, pembagian 14/86, release par
 
 ## Liquidity pool
 
-Pool tidak masuk anggaran 0,03 SOL. Biaya pembuatan pool di DEX dan modal SOL untuk likuiditas jauh di atas angka itu, jadi pool diperlakukan sebagai langkah kedua yang didanai terpisah.
+Sudah aktif di mainnet: pool `9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe` di Meteora DAMM v2.
 
-Rancangan yang disarankan:
-- **DEX:** Meteora DAMM v2 atau Raydium CPMM. Keduanya mendukung Token-2022. Cek biaya pembuatan pool di UI masing-masing saat membuat.
-- **Pasangan:** SKAL/SOL.
-- **Isi:** 70% supply (700 miliar SKAL) ke pool. 16% sisanya untuk distribusi komunitas (airdrop, hadiah kegiatan edukasi).
-- **LP:** dikunci permanen atau dibakar segera setelah pool dibuat, supaya likuiditas tidak bisa ditarik. Tunjukkan transaksi penguncian di Solscan saat presentasi.
-- **Harga awal:** ditentukan oleh rasio SKAL dan SOL yang disetor. Modal SOL kecil berarti harga mudah bergerak. Sampaikan ini terus terang kepada juri.
+- **Kenapa Meteora:** tidak ada biaya pembuatan pool. Raydium CPMM memungut 0,15 SOL di luar sewa.
+- **Satu sisi:** pool diisi 700 miliar SKAL dan 0 SOL, harga awal 1e-11 SOL per SKAL. SOL baru masuk saat ada yang membeli.
+- **LP:** 100% posisi dikunci permanen di transaksi pembuatan pool. Cek dengan `node client/check-pool.mjs https://api.mainnet-beta.solana.com 9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe`.
+- **Kedalaman:** beli 0,01 SOL menggeser harga sekitar 0,3%. Jual dibatasi SOL yang sudah dimasukkan pembeli.
+- **Fee swap:** 1%, dibayar dalam SOL, bisa diklaim pemilik NFT posisi.
 
-Pool yang "sehat" di sini berarti: LP tidak bisa ditarik pembuat, pembuat tidak bisa mencetak token baru, pembuat tidak bisa membekukan akun, dan jatah pembuat terkunci 12 bulan oleh kode yang tidak bisa diubah. Kedalaman pool tetap bergantung pada modal SOL yang disetor.
+Peringatan yang muncul di wallet, dan jawabannya untuk juri:
+- *Low liquidity:* benar, karena tidak ada SOL yang disetor.
+- *Unverified token:* benar, belum diajukan ke verifikasi Jupiter. Itu tinjauan listing, bukan pemeriksaan kode.
+- *Missing file metadata:* benar dan permanen. URI metadata dibiarkan kosong saat peluncuran lalu kunci ubahnya dihapus, jadi logo tidak bisa ditambahkan ke mint.
 
-## Langkah mainnet (dijalankan sendiri oleh pemilik wallet)
+## Langkah mainnet (sudah dijalankan 2026-10-17)
 
 Pakai wallet mainnet sendiri. Jangan pakai keypair di folder `keys/`, semuanya keypair uji lokal.
 

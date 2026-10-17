@@ -4,7 +4,7 @@ Official SKAL addresses are listed here and nowhere else. Any address not on thi
 
 ## Mainnet-beta
 
-Launched 2026-10-17. Vault immutable, mint and freeze authorities revoked, metadata locked.
+Launched 2026-10-17. Vault immutable, mint and freeze authorities revoked, metadata locked, pool LP locked.
 
 | | |
 |---|---|
@@ -23,6 +23,12 @@ Launched 2026-10-17. Vault immutable, mint and freeze authorities revoked, metad
 | Schedule | total `140000000000000000`, start `1800017970` (2027-01-15), end `1823777970` (2027-10-17), bump `255` |
 | Launch signatures | `61UE9gxfnSWzqN26wgaGQk76tyLvQPDP5Y2WoCEA8PfTR4GqpA6euKvpuh7exsw3b8QQ35JM2ZFquVnbatog9o4n`, `pVYjnpDBcvM8hLo9jEiqTAp9m5W7ia7YioZHqrGpkgKkfPvwQDQhodz92YYfWozaDYXd5tYKuqypxk8A5mUT4g5` |
 | Measured launch cost | 0.00540 SOL (total with vault: 0.01970 SOL) |
+| **Liquidity pool** | `9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe` (Meteora DAMM v2, SKAL/SOL) |
+| Pool position / NFT | `77e5yTa4wohGUVEPDbdmQbJpVdrb56zaf9yus65wqboV` / `2D34fWUDjejWe7TFbzfJjpYFtDmrABVmGE6WX54HSNw5` |
+| Pool signature | `5vrwyPRFesUoYsBm8D2Z9GCwmP3xrbQCFjUWqG8v2tWR7UynBqGDy7k1r61XeDGXZcBvV2oZf1eAQQS2NHrwruRe` |
+| Pool deposit | 700,000,000,000 SKAL (70%), 0 SOL; start price 1e-11 SOL per SKAL; 1% swap fee paid in SOL |
+| LP | 100% permanently locked in the creation transaction |
+| Measured pool cost | 0.017998281 SOL, all rent (Meteora charges no creation fee). Total on-chain spend: 0.03770 SOL |
 
 ## Devnet
 
@@ -44,6 +50,18 @@ Demo launch used by the website's live proof and attack lab. Its vesting started
 | Vault PDA | `EDXgLoukPV2B829Y73xxeVUHNsX699agqvRBhEGgy42P` |
 | Vault token account | `FNVoCLY25i9sV19HaafHGJD2EaTbjCujHfsadcFibwid` |
 | Schedule | total `140000000000000000`, start `1789646245`, end `1821182245`, bump `255` |
+
+Devnet pool rehearsal on the demo mint (Meteora DAMM v2, `node client/pool.mjs`):
+
+| | |
+|---|---|
+| Pool | `7B26oGu2fjoHbxcSfU8fSGjAWRgupfj3EAaNdXZA5vEZ` |
+| Position / NFT | `CRZBSB1QfRkVzYmNSs8JrwALWm4G5DiRdT3wxWe2y8f8` / `BRxqhuMXLjUGrKLWd5ZRAKrD2XS1k92u8MYEBXydUe9` |
+| Create signature | `23cRS7Fh4GzWF17j7A3vjqy2i3qR9U8QzMmziBKUi2Xd8ofCURzdeVoUUapnPTrzooHtJHK4q3GgWpG3Uj3a6cJq` |
+| Deposit | 700,000,000,000 SKAL, 0 SOL, start price 1e-11 SOL per SKAL, 1% swap fee |
+| LP locked | 100% permanent |
+| Measured cost | 0.017998281 SOL |
+| Test buy (0.01 SOL) | `23B4BX2Vq3sou1hjnZrXRHGoK2Sza3W9MiWgX1xoYVkHqgXNyktdC7NSsCMiAkPL7EkmSbUdb9J4DBH62eQZ6fDJ`, received 988,601,834 SKAL |
 
 `8xXDifrJWyBPEyUyAMUrtAnVXULP8GbKfUjr1s6N8FmH` is a discarded devnet launch: PowerShell 5.1 drops empty `""` arguments, which shifted every argument by one. Run `launch.mjs` from Bash, or pass a non-empty URI.
 

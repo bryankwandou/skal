@@ -51,6 +51,14 @@ Compare `sha256sum dumped.so` with the published hash, then make the program imm
 solana -um program set-upgrade-authority 5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ --final -k ~/.config/solana/ringan-mainnet.json
 ```
 
-## 3. Liquidity pool (separate budget)
+## 3. Liquidity pool (~0.018 SOL)
 
-See [id/SKAL.md](id/SKAL.md#liquidity-pool). Not part of the 0.03 SOL budget.
+Meteora DAMM v2, single-sided: the pool holds only SKAL (700B, 70% of supply) and SOL arrives when people buy. Meteora charges no creation fee; the 0.0180 SOL is rent for the pool, position, position NFT and four token accounts. The LP position is permanently locked in the same transaction. Raydium CPMM was rejected because its creation fee alone is 0.15 SOL.
+
+The deployer needs at least 0.0181 SOL. Dry-run first (no `--send` means simulate only):
+
+```bash
+cd client && node pool.mjs https://api.mainnet-beta.solana.com ~/.config/solana/ringan-mainnet.json 5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS
+```
+
+Then add `--send`. Verify the lock with `node check-pool.mjs <rpc> <pool>`: `lockedShare` must be `100%`. The pool address is fixed by the SKAL/SOL pair, so only one such pool can exist.

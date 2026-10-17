@@ -7,7 +7,11 @@
 <meta name="description" content="SKAL is a fixed-supply Solana token with no mint key, no freeze key, and a creator share held by a 2,472-byte vault anyone can audit. Check every claim live from this page.">
 <meta property="og:title" content="SKAL — Save Kalimantan">
 <meta property="og:description" content="A Solana token you can audit from your browser. Try to break the vault yourself.">
-<meta property="og:image" content="media/poster.jpg">
+<meta property="og:image" content="https://savekalimantan.vercel.app/media/poster.jpg">
+<meta property="og:url" content="https://savekalimantan.vercel.app/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://savekalimantan.vercel.app/">
 <meta name="theme-color" content="#0a1712">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +28,7 @@
       <a href="#proof" data-i18n="nav.proof">Live proof</a>
       <a href="#attack" data-i18n="nav.attack">Break the vault</a>
       <a href="#vesting" data-i18n="nav.vesting">Vesting</a>
+      <a href="#trade" data-i18n="nav.trade">Trade</a>
       <a href="#cost" data-i18n="nav.cost">Cost</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </nav>
@@ -46,7 +51,7 @@
     <div class="wrap hero-in">
       <a class="pill" href="#proof"><span class="dot" id="hero-dot"></span><span id="hero-status">Checking mainnet…</span></a>
       <h1 data-i18n="hero.title">A token you can audit <em>from this page</em>.</h1>
-      <p class="sub" data-i18n="hero.sub">SKAL has no key that can print more coins, no key that can freeze your wallet, and the creator's 14% sits in a 2,472-byte vault with no owner. Each of those facts is read from Solana while you watch, and you can try to break the vault yourself.</p>
+      <p class="sub" data-i18n="hero.sub">SKAL has no key that can print more coins, no key that can freeze your wallet, the creator's 14% sits in a 2,472-byte vault with no owner, and the pool's liquidity is locked forever. Each of those facts is read from Solana while you watch, and you can try to break the vault yourself.</p>
       <div class="cta">
         <a class="btn primary" href="#attack" data-i18n="hero.cta1">Try to break the vault</a>
         <a class="btn ghost" href="#walkthrough" data-i18n="hero.cta2">Watch the two-minute tour</a>
@@ -55,7 +60,7 @@
         <div><dt data-i18n="stat.supply">Fixed supply</dt><dd><span data-count="1" data-suffix="T">0</span></dd></div>
         <div><dt data-i18n="stat.size">Vault size</dt><dd><span data-count="2472">0</span> B</dd></div>
         <div><dt data-i18n="stat.tests">Tests passing</dt><dd><span data-count="16">0</span>/16</dd></div>
-        <div><dt data-i18n="stat.cost">Cost to ship</dt><dd><span data-count="0.0197" data-dec="4">0</span> SOL</dd></div>
+        <div><dt data-i18n="stat.cost">Cost to ship, pool included</dt><dd><span data-count="0.0377" data-dec="4">0</span> SOL</dd></div>
       </dl>
     </div>
   </section>
@@ -72,6 +77,7 @@
             <tr><td data-i18n="diff.r2">Can your wallet be frozen?</td><td class="bad" data-i18n="diff.r2a">Sometimes, the freeze key is kept</td><td class="good" data-i18n="diff.r2b">No. A freeze key never existed</td></tr>
             <tr><td data-i18n="diff.r3">Can the creator sell their share on day one?</td><td class="bad" data-i18n="diff.r3a">Usually yes</td><td class="good" data-i18n="diff.r3b">No. 90-day cliff, then linear over a year</td></tr>
             <tr><td data-i18n="diff.r4">Can the name or logo be swapped later?</td><td class="bad" data-i18n="diff.r4a">Often yes</td><td class="good" data-i18n="diff.r4b">No. Metadata update key removed</td></tr>
+            <tr><td data-i18n="diff.r6">Can the creator pull the liquidity?</td><td class="bad" data-i18n="diff.r6a">Often yes, the LP tokens are kept</td><td class="good" data-i18n="diff.r6b">No. 100% of the pool position is locked forever</td></tr>
             <tr><td data-i18n="diff.r5">Can you check all of this yourself?</td><td class="bad" data-i18n="diff.r5a">Only with tools and know-how</td><td class="good" data-i18n="diff.r5b">Yes. This page reads it live</td></tr>
           </tbody>
         </table>
@@ -99,6 +105,9 @@
         <article class="pcard reveal" data-k="meta"><h3 data-i18n="proof.c4">Name on the mint</h3><p class="val">…</p><p class="hint" data-i18n="proof.c4h">Stored inside the token itself, not on a server.</p></article>
         <article class="pcard reveal" data-k="vault"><h3 data-i18n="proof.c5">Held by the vault</h3><p class="val">…</p><p class="hint" data-i18n="proof.c5h">The creator's share that the vault still holds.</p></article>
         <article class="pcard reveal" data-k="program"><h3 data-i18n="proof.c6">Vault program</h3><p class="val">…</p><p class="hint" data-i18n="proof.c6h">Deployed and executable.</p></article>
+        <article class="pcard reveal" data-k="lock"><h3 data-i18n="proof.c7">Pool liquidity locked</h3><p class="val">…</p><p class="hint" data-i18n="proof.c7h">Share of the pool position that can never be withdrawn.</p></article>
+        <article class="pcard reveal" data-k="poolSkal"><h3 data-i18n="proof.c8">SKAL in the pool</h3><p class="val">…</p><p class="hint" data-i18n="proof.c8h">Started at 700 billion. Goes down as people buy.</p></article>
+        <article class="pcard reveal" data-k="poolSol"><h3 data-i18n="proof.c9">SOL in the pool</h3><p class="val">…</p><p class="hint" data-i18n="proof.c9h">Started at zero. Every SOL here came from a buyer.</p></article>
       </div>
       <p class="small muted reveal" id="proof-note"></p>
     </div>
@@ -206,7 +215,7 @@
         <h2 class="reveal" data-i18n="tok.title">One trillion SKAL, minted once</h2>
         <p class="lede reveal" data-i18n="tok.lede">Every coin is created in a single transaction, and that same transaction destroys the key that created them.</p>
         <div class="legend">
-          <div class="leg reveal"><i style="background:var(--a1)"></i><b>70%</b><div><span data-i18n="tok.l1">Liquidity pool</span><small data-i18n="tok.l1d">Paired with SOL. Pool tokens locked or burned.</small></div></div>
+          <div class="leg reveal"><i style="background:var(--a1)"></i><b>70%</b><div><span data-i18n="tok.l1">Liquidity pool</span><small data-i18n="tok.l1d">Single-sided Meteora pool against SOL. Position locked forever.</small></div></div>
           <div class="leg reveal"><i style="background:var(--a3)"></i><b>16%</b><div><span data-i18n="tok.l2">Community</span><small data-i18n="tok.l2d">Education programs and distribution.</small></div></div>
           <div class="leg reveal"><i style="background:var(--a2)"></i><b>14%</b><div><span data-i18n="tok.l3">Creator, vested</span><small data-i18n="tok.l3d">Held by the vault. 90-day cliff, linear to day 365.</small></div></div>
         </div>
@@ -221,21 +230,42 @@
     </div>
   </section>
 
+  <section id="trade">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="trade.eyebrow">Trade</p>
+      <h2 class="reveal" data-i18n="trade.title">One pool, locked forever</h2>
+      <p class="lede reveal" data-i18n="trade.lede">SKAL trades in a single Meteora DAMM v2 pool against SOL. The pool started with 700 billion SKAL and no SOL, so its depth grows only as people buy. Jupiter already routes swaps through it.</p>
+      <div class="cta reveal">
+        <a class="btn primary" href="https://jup.ag/swap/SOL-5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS" target="_blank" rel="noopener" data-i18n="trade.jup">Swap on Jupiter</a>
+        <a class="btn ghost" href="https://app.meteora.ag/dammv2/9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe" target="_blank" rel="noopener" data-i18n="trade.met">Pool on Meteora</a>
+        <a class="btn ghost" href="https://dexscreener.com/solana/9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe" target="_blank" rel="noopener">DexScreener</a>
+        <a class="btn ghost" href="https://solscan.io/token/5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS" target="_blank" rel="noopener">Solscan</a>
+      </div>
+      <p class="small muted reveal" data-i18n="trade.check">Before you swap, check that the mint is 5nyS…npmS. Other tokens can use the same name.</p>
+      <h3 class="mt reveal" data-i18n="trade.wTitle">Why your wallet shows warnings</h3>
+      <div class="grid g3">
+        <div class="card reveal"><h3 data-i18n="trade.w1">Low liquidity</h3><p data-i18n="trade.w1d">True. The pool holds SKAL but very little SOL, because no SOL was deposited at launch. Selling is limited to the SOL that buyers have put in. The live counters above show both sides.</p></div>
+        <div class="card reveal"><h3 data-i18n="trade.w2">Unverified token</h3><p data-i18n="trade.w2d">True. SKAL has not been through Jupiter's verification yet. Verification is a listing review, not a code check; the code checks are on this page.</p></div>
+        <div class="card reveal"><h3 data-i18n="trade.w3">Missing file metadata</h3><p data-i18n="trade.w3d">True, and permanent. Name and symbol live on the mint itself, but the link to an off-chain logo file was left empty and the key that could change it was destroyed. Wallets show a placeholder icon.</p></div>
+      </div>
+    </div>
+  </section>
+
   <section id="cost" class="band">
     <div class="wrap">
       <p class="eyebrow reveal" data-i18n="cost.eyebrow">Cost</p>
-      <h2 class="reveal" data-i18n="cost.title">The whole launch costs 0.0197 SOL</h2>
-      <p class="lede reveal" data-i18n="cost.lede">Solana charges rent for every byte a program occupies, so a smaller program is a cheaper one. The vault was written without a framework and trimmed to 2,472 bytes.</p>
+      <h2 class="reveal" data-i18n="cost.title">Token, vault and pool for 0.0377 SOL</h2>
+      <p class="lede reveal" data-i18n="cost.lede">Solana charges rent for every byte an account occupies, so a smaller program is a cheaper one. The vault was written without a framework and trimmed to 2,472 bytes. The pool costs only rent: Meteora charges no creation fee, and no SOL was deposited.</p>
       <div class="bars reveal">
-        <div class="brow"><span data-i18n="cost.b1">Mint launch</span><div class="track"><i style="--w:18%"></i></div><b>0.0054</b></div>
-        <div class="brow"><span data-i18n="cost.b2">Vault deploy</span><div class="track"><i style="--w:47.7%"></i></div><b>0.0143</b></div>
-        <div class="brow total"><span data-i18n="cost.b3">Total</span><div class="track"><i style="--w:65.7%"></i></div><b>0.0197</b></div>
-        <div class="brow cap"><span data-i18n="cost.b4">Budget limit</span><div class="track"><i style="--w:100%"></i></div><b>0.0300</b></div>
+        <div class="brow"><span data-i18n="cost.b1">Mint launch</span><div class="track"><i style="--w:13.5%"></i></div><b>0.0054</b></div>
+        <div class="brow"><span data-i18n="cost.b2">Vault deploy</span><div class="track"><i style="--w:35.8%"></i></div><b>0.0143</b></div>
+        <div class="brow"><span data-i18n="cost.b5">DEX pool</span><div class="track"><i style="--w:45%"></i></div><b>0.0180</b></div>
+        <div class="brow total"><span data-i18n="cost.b3">Total</span><div class="track"><i style="--w:94.3%"></i></div><b>0.0377</b></div>
       </div>
       <div class="grid g3 mt">
         <div class="card reveal"><h3>2,472 B</h3><p data-i18n="cost.c1">Vault program after stripping debug sections. 143 lines of Rust, no allocator.</p></div>
         <div class="card reveal"><h3>4,360 CU</h3><p data-i18n="cost.c2">Compute used by one release, measured on devnet. The default limit per instruction is 200,000.</p></div>
-        <div class="card reveal"><h3>≈ 1.02 SOL</h3><p data-i18n="cost.c3">What rent alone would be for a 200 KB program, a common size for framework-built code.</p></div>
+        <div class="card reveal"><h3>0.15 SOL</h3><p data-i18n="cost.c3">Raydium's fee just to open a CPMM pool, before rent. Meteora DAMM v2 charges none, so SKAL used it.</p></div>
       </div>
     </div>
   </section>
@@ -255,7 +285,7 @@
   <section id="verify" class="band">
     <div class="wrap">
       <p class="eyebrow reveal" data-i18n="ver.eyebrow">Verify from a terminal</p>
-      <h2 class="reveal" data-i18n="ver.title">Prefer the command line? Same checks, four commands.</h2>
+      <h2 class="reveal" data-i18n="ver.title">Prefer the command line? Same checks, five commands.</h2>
       <div class="grid g2">
         <div class="reveal"><h3 class="h3s" data-i18n="ver.c1">Mint and freeze keys</h3><pre class="code">spl-token display &lt;MINT&gt; -um
 <span class="c"># Mint authority: (not set)</span>
@@ -269,6 +299,9 @@ sha256sum v.so
         <div class="reveal"><h3 class="h3s" data-i18n="ver.c4">Run the full test suite</h3><pre class="code">node client/test-skal.mjs &lt;VAULT&gt; payer.json \
   https://api.devnet.solana.com
 <span class="c"># 16 lulus, 0 gagal</span></pre></div>
+        <div class="reveal"><h3 class="h3s" data-i18n="ver.c5">The pool position is locked</h3><pre class="code">node client/check-pool.mjs \
+  https://api.mainnet-beta.solana.com &lt;POOL&gt;
+<span class="c"># lockedShare: '100%'</span></pre></div>
       </div>
     </div>
   </section>
@@ -291,8 +324,9 @@ sha256sum v.so
       <div class="road">
         <div class="ph done reveal"><small data-i18n="road.done">Done</small><h3 data-i18n="road.p1">Research</h3><p data-i18n="road.p1d">Ringan, a 1,352-byte token program, set the floor for size and cost.</p></div>
         <div class="ph done reveal"><small data-i18n="road.done">Done</small><h3 data-i18n="road.p2">Vault on devnet</h3><p data-i18n="road.p2d">Deployed, with 16 of 16 end-to-end tests passing on the public devnet.</p></div>
-        <div class="ph done reveal" id="ph-main"><small data-i18n="road.done">Done</small><h3 data-i18n="road.p3">Mainnet</h3><p data-i18n="road.p3d">Vault deployed and frozen, mint launched for 0.0197 SOL in total, addresses published.</p></div>
-        <div class="ph reveal"><small data-i18n="road.next">Next</small><h3 data-i18n="road.p4">Liquidity</h3><p data-i18n="road.p4d">SKAL/SOL pool with pool tokens locked. Funded separately.</p></div>
+        <div class="ph done reveal" id="ph-main"><small data-i18n="road.done">Done</small><h3 data-i18n="road.p3">Mainnet</h3><p data-i18n="road.p3d">Vault deployed and frozen, mint launched for 0.0197 SOL, addresses published.</p></div>
+        <div class="ph done reveal"><small data-i18n="road.done">Done</small><h3 data-i18n="road.p4">Liquidity</h3><p data-i18n="road.p4d">SKAL/SOL pool on Meteora with 70% of supply, position locked forever, 0.0180 SOL in rent.</p></div>
+        <div class="ph reveal"><small data-i18n="road.next">Next</small><h3 data-i18n="road.p5">Listing</h3><p data-i18n="road.p5d">Jupiter verification and a DexScreener profile. Both are reviews by those sites, not something code can grant.</p></div>
       </div>
 
       <h2 class="mt2 reveal" data-i18n="faq.title">Questions people ask</h2>
@@ -301,6 +335,7 @@ sha256sum v.so
         <details class="reveal"><summary data-i18n="faq.q2">Why the name Save Kalimantan?</summary><p data-i18n="faq.a2">Kalimantan's forests and its hornbill, the bird in the logo, are a reminder that some things deserve protection from short-term extraction. The project is not affiliated with any organization working there.</p></details>
         <details class="reveal"><summary data-i18n="faq.q3">What stops the creator from changing the vault later?</summary><p data-i18n="faq.a3">On mainnet the upgrade key is set to none right after deployment, and from then on the code is fixed. You can confirm it with solana program show, which reports the authority as none.</p></details>
         <details class="reveal"><summary data-i18n="faq.q4">What if the creator loses interest?</summary><p data-i18n="faq.a4">Nothing breaks. Anyone can call release, and tokens can only go to the wallet that is part of the vault's address.</p></details>
+        <details class="reveal"><summary data-i18n="faq.q6">Can the creator remove the liquidity?</summary><p data-i18n="faq.a6">No. The pool position was permanently locked in the same transaction that created the pool. The creator can still claim the 1% swap fees it earns, but the SKAL and SOL in the pool can only leave through trades.</p></details>
         <details class="reveal"><summary data-i18n="faq.q5">Has it been audited?</summary><p data-i18n="faq.a5">Not by a third party. The vault is 143 lines so it can be read in one sitting, the test suite covers each known attack, and the attack lab above lets you rerun those attacks yourself.</p></details>
       </div>
       <p class="notice reveal" data-i18n="notice">Educational project. Not financial advice, not an offer, and not affiliated with any organization.</p>

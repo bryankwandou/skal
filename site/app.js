@@ -142,6 +142,20 @@
         out.meta = md ? `${md.state.name} · ${md.state.symbol}` : "—";
         out.vault = BigInt(bal.value.data.parsed.info.tokenAmount.amount) / 1_000_000n;
       }
+      if (cfg.pool) {
+        // DAMM v2 pool account: liquidity is a u128 at byte 360, permanent_lock_liquidity a u128 at byte 552.
+        const [pool, ps, pl] = await Promise.all([
+          rpc(n, "getAccountInfo", [cfg.pool, { encoding: "base64", dataSlice: { offset: 360, length: 208 } }]),
+          rpc(n, "getAccountInfo", [cfg.poolSkal, { encoding: "jsonParsed" }]),
+          rpc(n, "getAccountInfo", [cfg.poolSol, { encoding: "jsonParsed" }]),
+        ]);
+        const raw = Uint8Array.from(atob(pool.value.data[0]), (c) => c.charCodeAt(0));
+        const u128 = (o) => { let v = 0n; for (let i = 15; i >= 0; i--) v = (v << 8n) | BigInt(raw[o + i]); return v; };
+        const liq = u128(0), locked = u128(192);
+        out.lockBps = liq ? Number((locked * 10000n) / liq) : 0;
+        out.poolSkal = BigInt(ps.value.data.parsed.info.tokenAmount.amount) / 1_000_000n;
+        out.poolSol = Number(pl.value.data.parsed.info.tokenAmount.amount) / 1e9;
+      }
       out.state = "ok";
     } catch (e) { out.state = "error"; out.err = e.message; }
     if (n === net) { proof = out; paintProof(); }
@@ -154,8 +168,9 @@
       card.classList.toggle("ok", ok === true); card.classList.toggle("warn", ok === false);
     };
     const pending = !C[p.net]?.mint;
-    if (p.state === "loading") ["mintAuth", "freezeAuth", "supply", "meta", "vault", "program"].forEach((k) => set(k, ""));
-    else if (p.state === "error") ["mintAuth", "freezeAuth", "supply", "meta", "vault", "program"].forEach((k) => set(k, "—", false));
+    const keys = ["mintAuth", "freezeAuth", "supply", "meta", "vault", "program", "lock", "poolSkal", "poolSol"];
+    if (p.state === "loading") keys.forEach((k) => set(k, ""));
+    else if (p.state === "error") keys.forEach((k) => set(k, "—", false));
     else {
       if (pending) ["mintAuth", "freezeAuth", "supply", "meta", "vault"].forEach((k) => set(k, t("notLaunched")));
       else {
@@ -166,6 +181,12 @@
         set("vault", `${fmt(p.vault.toString())} SKAL`, true);
       }
       set("program", p.program ? t("deployed", { n: fmt(p.programSize ?? 0) }) : t("missing"), p.program ? true : undefined);
+      if (p.lockBps === undefined) ["lock", "poolSkal", "poolSol"].forEach((k) => set(k, t("notLaunched")));
+      else {
+        set("lock", t("locked", { p: fmt(p.lockBps / 100, p.lockBps % 100 ? 2 : 0) }), p.lockBps === 10000);
+        set("poolSkal", `${fmt(p.poolSkal.toString())} SKAL`);
+        set("poolSol", `${fmt(p.poolSol, 4)} SOL`);
+      }
     }
     $("#proof-slot").textContent = p.slot ? t("reading", { slot: fmt(p.slot) }) : "";
     $("#proof-note").textContent = p.state === "error" ? t("offline", { net: p.net }) : pending ? t("pendingNote") : p.net === "devnet" ? t("devNote") : "";
@@ -300,9 +321,9 @@
     const m = C.mainnet, d = C.devnet;
     $("#addr-main").innerHTML = $("#addr-main .head").outerHTML +
       (m.mint ? row("mainnet", t("lMint"), m.mint) : `<div class="addr"><div class="k">${t("lMint")}<code>${t("notLaunched")}</code></div></div>`) +
-      row("mainnet", t("lVault"), m.vault) + row(null, t("lHash"), C.sha256);
+      row("mainnet", t("lVault"), m.vault) + row("mainnet", t("lPool"), m.pool) + row(null, t("lHash"), C.sha256);
     $("#addr-dev").innerHTML = $("#addr-dev .head").outerHTML +
-      row("devnet", t("lVault"), d.vault) + row("devnet", t("lMint"), d.mint) + row("devnet", t("lVaultTok"), d.vaultToken);
+      row("devnet", t("lVault"), d.vault) + row("devnet", t("lMint"), d.mint) + row("devnet", t("lVaultTok"), d.vaultToken) + row("devnet", t("lPool"), d.pool);
     if (m.mint) { const s = $("#main-status"); s.classList.add("live"); s.removeAttribute("data-i18n"); s.textContent = "Live"; $("#ph-main").classList.add("done"); }
   }
   document.addEventListener("click", (e) => {

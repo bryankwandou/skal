@@ -18,6 +18,7 @@ dis*.txt
 
 # Per-launch records (contain local test addresses)
 client/launch-*.json
+client/pool-*.json
 
 # Stale copy of the workspace
 ringan/

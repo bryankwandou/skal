@@ -229,7 +229,7 @@ input[type=range] { width: 100%; accent-color: var(--a2); margin: 8px 0 18px; he
 
 /* roadmap + faq */
 .road { display: grid; gap: 18px; margin-top: 24px; }
-@media (min-width: 900px) { .road { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 900px) { .road { grid-template-columns: repeat(5, 1fr); } }
 .ph { border-top: 3px solid var(--line); padding-top: 16px; }
 .ph.done { border-color: var(--a1); }
 .ph small { color: var(--muted); font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
