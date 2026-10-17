@@ -94,17 +94,24 @@
   })();
 
   /* ---------- RPC ---------- */
+  const endpoints = (net) => [].concat(C[net].rpc);
   async function rpc(net, method, params) {
-    const r = await fetch(C[net].rpc, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
-    const j = await r.json();
-    if (j.error) throw new Error(j.error.message);
-    return j.result;
+    let last;
+    for (const url of endpoints(net)) {
+      try {
+        const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
+        const j = await r.json();
+        if (j.error) throw new Error(j.error.message);
+        return j.result;
+      } catch (e) { last = e; }
+    }
+    throw last;
   }
   const short = (a) => `${a.slice(0, 4)}…${a.slice(-4)}`;
   const explorer = (net, a) => `https://explorer.solana.com/address/${a}${net === "devnet" ? "?cluster=devnet" : ""}`;
 
   /* ---------- live proof ---------- */
-  let net = "devnet", proof = {};
+  let net = "mainnet", proof = {};
   async function loadProof() {
     const n = net;
     proof = { net: n, state: "loading" };
@@ -126,14 +133,14 @@
       if (cfg.mint) {
         const [mint, bal] = await Promise.all([
           rpc(n, "getAccountInfo", [cfg.mint, { encoding: "jsonParsed" }]),
-          rpc(n, "getTokenAccountBalance", [cfg.vaultToken]),
+          rpc(n, "getAccountInfo", [cfg.vaultToken, { encoding: "jsonParsed" }]),
         ]);
         const info = mint.value.data.parsed.info;
         out.mintAuth = info.mintAuthority; out.freezeAuth = info.freezeAuthority;
         out.supply = BigInt(info.supply) / 10n ** BigInt(info.decimals);
         const md = (info.extensions || []).find((e) => e.extension === "tokenMetadata");
         out.meta = md ? `${md.state.name} · ${md.state.symbol}` : "—";
-        out.vault = BigInt(bal.value.amount) / 1_000_000n;
+        out.vault = BigInt(bal.value.data.parsed.info.tokenAmount.amount) / 1_000_000n;
       }
       out.state = "ok";
     } catch (e) { out.state = "error"; out.err = e.message; }
@@ -162,10 +169,10 @@
     }
     $("#proof-slot").textContent = p.slot ? t("reading", { slot: fmt(p.slot) }) : "";
     $("#proof-note").textContent = p.state === "error" ? t("offline", { net: p.net }) : pending ? t("pendingNote") : p.net === "devnet" ? t("devNote") : "";
-    if (p.net === "devnet") {
+    {
       const dot = $("#hero-dot"), st = $("#hero-status");
       dot.classList.toggle("on", p.state === "ok");
-      st.textContent = p.state === "ok" ? t("live", { net: "devnet", slot: fmt(p.slot) }) : p.state === "error" ? t("offline", { net: "devnet" }) : t("checking", { net: "devnet" });
+      st.textContent = p.state === "ok" ? t("live", { net: p.net, slot: fmt(p.slot) }) : p.state === "error" ? t("offline", { net: p.net }) : t("checking", { net: p.net });
     }
   }
   rerender.push(paintProof);

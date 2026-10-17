@@ -58,7 +58,7 @@ window.I18N = {
     "road.eyebrow": "Posisi saat ini", "road.done": "Selesai", "road.next": "Berikutnya", "road.later": "Nanti",
     "road.p1": "Riset", "road.p1d": "Ringan, program token 1.352 byte, jadi patokan ukuran dan biaya.",
     "road.p2": "Vault di devnet", "road.p2d": "Sudah di-deploy, 16 dari 16 tes end-to-end lulus di devnet publik.",
-    "road.p3": "Mainnet", "road.p3d": "Deploy lalu bekukan vault, luncurkan mint, umumkan alamatnya.",
+    "road.p3": "Mainnet", "road.p3d": "Vault di-deploy dan dibekukan, mint diluncurkan dengan total 0,0197 SOL, alamat diumumkan.",
     "road.p4": "Likuiditas", "road.p4d": "Pool SKAL/SOL dengan token LP dikunci. Didanai terpisah.",
     "faq.title": "Pertanyaan yang sering muncul",
     "faq.q1": "Apakah SKAL investasi?", "faq.a1": "Bukan. SKAL adalah proyek edukasi. Tidak menggalang dana, tidak menjanjikan keuntungan, dan tidak ada tim yang menjualnya kepadamu. Tujuannya menunjukkan seperti apa token ketika cara-cara umum merugikan pemegang sudah dihapus lewat kode.",

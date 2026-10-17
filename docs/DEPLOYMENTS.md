@@ -4,7 +4,7 @@ Official SKAL addresses are listed here and nowhere else. Any address not on thi
 
 ## Mainnet-beta
 
-Vault deployed and immutable on 2026-10-17. Mint launch pending.
+Launched 2026-10-17. Vault immutable, mint and freeze authorities revoked, metadata locked.
 
 | | |
 |---|---|
@@ -16,7 +16,13 @@ Vault deployed and immutable on 2026-10-17. Mint launch pending.
 | Deploy signature | `FoHRLvRK6R4wKuZV3CoBT3wPngdnNksbBdvK7AHZPtUsoNoy6au4McGQpxidiHMed4zJXqTL1DKBQkk8Eboj9it` |
 | Finalize signature | `42Hf5bavXsQRgZ66KuKfg8oqSfA55zoSUtyGn56YmexLhtzhCKGzgKHAJzVRiFDZanibLM1GQsUVAvNP7QayY16o` |
 | Measured deploy cost | 0.01430 SOL |
-| Mint | pending (needs 0.0054 SOL) |
+| **SKAL mint** | `5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS` |
+| Creator token account (86%) | `6LQQQvJFmUiW2e4aE2Dzp7mz5vyc2Nq1N9HxNxPqEUew` |
+| Vault PDA | `DDPqop8GyjYHaq5LzP4xECkKkZcqzz2J7SbC2AwsHKQP` |
+| Vault token account (14%) | `4yaWsT9hL1QagsS7BxFJGqVoxgqTumLq9bgTmF28UVS2` |
+| Schedule | total `140000000000000000`, start `1800017970` (2027-01-15), end `1823777970` (2027-10-17), bump `255` |
+| Launch signatures | `61UE9gxfnSWzqN26wgaGQk76tyLvQPDP5Y2WoCEA8PfTR4GqpA6euKvpuh7exsw3b8QQ35JM2ZFquVnbatog9o4n`, `pVYjnpDBcvM8hLo9jEiqTAp9m5W7ia7YioZHqrGpkgKkfPvwQDQhodz92YYfWozaDYXd5tYKuqypxk8A5mUT4g5` |
+| Measured launch cost | 0.00540 SOL (total with vault: 0.01970 SOL) |
 
 ## Devnet
 

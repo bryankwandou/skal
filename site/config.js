@@ -17,11 +17,12 @@ window.SKAL = {
     otherDest: "6GRRw51PVPN6VYhwMDrAucYx8Pwp1eY83BqMhgVb6Yam",
   },
   mainnet: {
-    rpc: "https://api.mainnet-beta.solana.com",
+    // api.mainnet-beta.solana.com refuses browser requests (403), so a CORS-friendly public node goes first.
+    rpc: ["https://solana-rpc.publicnode.com", "https://api.mainnet-beta.solana.com"],
     cluster: "mainnet-beta",
     vault: "5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ",
-    mint: null,
-    vaultToken: null,
+    mint: "5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS",
+    vaultToken: "4yaWsT9hL1QagsS7BxFJGqVoxgqTumLq9bgTmF28UVS2",
   },
   sha256: "729572666d23a87adc0faeb747bc6599dc9efe556043b4708576764ae5588d6f",
 };

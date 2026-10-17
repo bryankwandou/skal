@@ -6,7 +6,7 @@
 
 [Blueprint](docs/BLUEPRINT.md) · [Deployments](docs/DEPLOYMENTS.md) · [Security](SECURITY.md) · [Website](site/index.html)
 
-![license](https://img.shields.io/badge/license-MIT-blue) ![solana](https://img.shields.io/badge/solana-devnet-9945FF) ![standard](https://img.shields.io/badge/token-Token--2022-14F195) ![tests](https://img.shields.io/badge/tests-16%2F16-brightgreen)
+![license](https://img.shields.io/badge/license-MIT-blue) ![solana](https://img.shields.io/badge/solana-mainnet--beta-9945FF) ![standard](https://img.shields.io/badge/token-Token--2022-14F195) ![tests](https://img.shields.io/badge/tests-16%2F16-brightgreen)
 
 </div>
 
@@ -58,6 +58,8 @@ The attack lab builds real transactions against the devnet vault and dry-runs th
 | Creator allocation | 14%, vested: 90-day cliff, linear to day 365 |
 | Vault program size | 2,472 bytes (SBPF v3) |
 | On-chain cost to ship | 0.0197 SOL total, split into 0.0054 (mint) + 0.0143 (vault) |
+| Mainnet mint | [`5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS`](https://explorer.solana.com/address/5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS) |
+| Mainnet vault | [`5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ`](https://explorer.solana.com/address/5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ) (immutable) |
 | Devnet | Live, 16/16 end-to-end tests passing ([addresses](docs/DEPLOYMENTS.md)) |
 
 ## Repository layout
