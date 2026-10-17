@@ -28,6 +28,7 @@ Launched 2026-10-17. Vault immutable, mint and freeze authorities revoked, metad
 | Pool signature | `5vrwyPRFesUoYsBm8D2Z9GCwmP3xrbQCFjUWqG8v2tWR7UynBqGDy7k1r61XeDGXZcBvV2oZf1eAQQS2NHrwruRe` |
 | Pool deposit | 700,000,000,000 SKAL (70%), 0 SOL; start price 1e-11 SOL per SKAL; 1% swap fee paid in SOL |
 | LP | 100% permanently locked in the creation transaction |
+| First buy (creator test, 0.002 SOL) | `5EzfSVjDrSwyqJn3UcV2zSE4qeeD9LhMEFm6uPsmHbb9EyLhXPoipE4456yHv13DdFDxX19JFaphWVnhAZjNEyci`, received 197,944,010 SKAL; opens the sell side and the DexScreener listing |
 | Measured pool cost | 0.017998281 SOL, all rent (Meteora charges no creation fee). Total on-chain spend: 0.03770 SOL |
 
 ## Devnet
