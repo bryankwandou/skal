@@ -24,7 +24,7 @@ SKAL is a fixed-supply token built on the Token-2022 standard. The three questio
 | Can the creator freeze wallets? | No | Freeze authority is `null` |
 | Can the creator dump their allocation? | Not for 12 months | 14% sits in a vault whose release rule is code |
 
-**Website:** https://bryankwandou.github.io/skal/ · **Walkthrough video:** [site/media/walkthrough.mp4](site/media/walkthrough.mp4)
+**Website:** https://savekalimantan.vercel.app (mirror: https://bryankwandou.github.io/skal/) · **Walkthrough video:** [site/media/walkthrough.mp4](site/media/walkthrough.mp4)
 
 ![SKAL landing page](docs/img/hero.png)
 
