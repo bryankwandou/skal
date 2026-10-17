@@ -4,15 +4,19 @@ Official SKAL addresses are listed here and nowhere else. Any address not on thi
 
 ## Mainnet-beta
 
-Not deployed yet. Reserved addresses and the binary to be deployed:
+Vault deployed and immutable on 2026-10-17. Mint launch pending.
 
 | | |
 |---|---|
-| Vault program ID (reserved) | `5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ` |
+| Vault program | `5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ` |
+| ProgramData | `E5ynGj1X4YbhL4aLjYmzY4W7DMSZDxPdUCrVRNFYJvxw` |
+| Upgrade authority | none (set with `--final`) |
 | Deployer | `3bZ1Jj16o4qdcpNx2EGTZ5eXTZreGYBZx4pCLPGPaVqb` |
-| `skal_vault.min.so` SHA-256 | `729572666d23a87adc0faeb747bc6599dc9efe556043b4708576764ae5588d6f` |
-| Mint | pending phase 1 |
-| Vault deployed / immutable | pending phase 2 |
+| `skal_vault.min.so` SHA-256 | `729572666d23a87adc0faeb747bc6599dc9efe556043b4708576764ae5588d6f` (matches `solana program dump`) |
+| Deploy signature | `FoHRLvRK6R4wKuZV3CoBT3wPngdnNksbBdvK7AHZPtUsoNoy6au4McGQpxidiHMed4zJXqTL1DKBQkk8Eboj9it` |
+| Finalize signature | `42Hf5bavXsQRgZ66KuKfg8oqSfA55zoSUtyGn56YmexLhtzhCKGzgKHAJzVRiFDZanibLM1GQsUVAvNP7QayY16o` |
+| Measured deploy cost | 0.01430 SOL |
+| Mint | pending (needs 0.0054 SOL) |
 
 ## Devnet
 
