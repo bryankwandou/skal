@@ -24,6 +24,29 @@ SKAL is a fixed-supply token built on the Token-2022 standard. The three questio
 | Can the creator freeze wallets? | No | Freeze authority is `null` |
 | Can the creator dump their allocation? | Not for 12 months | 14% sits in a vault whose release rule is code |
 
+**Website:** https://bryankwandou.github.io/skal/ · **Walkthrough video:** [site/media/walkthrough.mp4](site/media/walkthrough.mp4)
+
+![SKAL landing page](docs/img/hero.png)
+
+## Proof
+
+Every value below is read live from Solana by the website, not typed in.
+
+| Live on-chain checks | Attack lab: honest release passes |
+|---|---|
+| ![Live proof](docs/img/live-proof.png) | ![Honest release](docs/img/attack-honest.png) |
+| **Attack lab: fake schedule rejected** | **Vesting simulator** |
+| ![Attack rejected](docs/img/attack-rejected.png) | ![Vesting](docs/img/vesting.png) |
+
+The attack lab builds real transactions against the devnet vault and dry-runs them with `simulateTransaction`:
+
+| Scenario | Devnet result |
+|---|---|
+| Honest release | Passes, 4,360 compute units, moves only the vested part |
+| Fake schedule (halved total) | `ProgramFailedToComplete`: seeds do not derive a valid address |
+| Redirect to another wallet | `PrivilegeEscalation`: PDA signer not authorized |
+| Swap token program | `custom program error: 0x1` |
+
 ## Key facts
 
 | | |

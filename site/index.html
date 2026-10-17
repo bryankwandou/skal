@@ -4,382 +4,332 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SKAL — Save Kalimantan</title>
-<meta name="description" content="SKAL is a fixed-supply Token-2022 asset on Solana. No mint authority, no freeze authority, and a creator allocation locked by a 2,472-byte stateless vault.">
+<meta name="description" content="SKAL is a fixed-supply Solana token with no mint key, no freeze key, and a creator share held by a 2,472-byte vault anyone can audit. Check every claim live from this page.">
 <meta property="og:title" content="SKAL — Save Kalimantan">
-<meta property="og:description" content="A token whose rug vectors are closed by code, not promises.">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#0b1410">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2314F195'/%3E%3Cpath d='M9 20c0 2 2.5 3.5 7 3.5s7-1.5 7-4-3-3.3-7-3.8-6.5-1.3-6.5-3.7S12 8.5 16 8.5s6.5 1.4 6.8 3.5' fill='none' stroke='%230b1410' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta property="og:description" content="A Solana token you can audit from your browser. Try to break the vault yourself.">
+<meta property="og:image" content="media/poster.jpg">
+<meta name="theme-color" content="#0a1712">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#ffffff;--bg2:#f5f8f6;--fg:#0b1410;--muted:#55645b;--line:#e3e9e5;--card:#ffffff;
-  --accent:#0f9d63;--accent2:#7b5cff;--accent-soft:rgba(15,157,99,.1);--code:#f0f4f2;
-  --shadow:0 1px 2px rgba(11,20,16,.04),0 8px 24px rgba(11,20,16,.06);
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0b1410;--bg2:#0f1a15;--fg:#e8f0eb;--muted:#93a49a;--line:#1e2c25;--card:#111d17;
-  --accent:#14F195;--accent2:#9d86ff;--accent-soft:rgba(20,241,149,.08);--code:#0d1813;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
-}}
-:root[data-theme="dark"]{
-  --bg:#0b1410;--bg2:#0f1a15;--fg:#e8f0eb;--muted:#93a49a;--line:#1e2c25;--card:#111d17;
-  --accent:#14F195;--accent2:#9d86ff;--accent-soft:rgba(20,241,149,.08);--code:#0d1813;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-code,.mono{font-family:"JetBrains Mono",ui-monospace,Consolas,monospace}
-.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
-@media(min-width:720px){.wrap{padding:0 32px}}
-
-/* nav */
-header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;text-decoration:none;font-size:1.1rem}
-.mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#0b1410;font-weight:800;font-size:.95rem}
-.links{display:none;gap:28px;font-size:.92rem;color:var(--muted)}
-.links a{text-decoration:none}.links a:hover{color:var(--fg)}
-@media(min-width:860px){.links{display:flex}}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-weight:600;font-size:.92rem;text-decoration:none;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--fg)}
-.btn:hover{border-color:var(--muted)}
-.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.btn.primary:hover{opacity:.9}
-
-/* hero */
-.hero{padding:80px 0 64px;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:-40% -10% auto auto;width:720px;height:720px;background:radial-gradient(closest-side,var(--accent-soft),transparent);pointer-events:none}
-.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:.82rem;color:var(--muted);background:var(--card)}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.05;letter-spacing:-.035em;margin:20px 0 20px;font-weight:800;max-width:14ch}
-h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{font-size:1.15rem;color:var(--muted);max-width:60ch;margin:0 0 32px}
-.cta{display:flex;flex-wrap:wrap;gap:12px}
-
-/* stats */
-.stats{display:grid;grid-template-columns:repeat(2,1fr);border:1px solid var(--line);border-radius:16px;background:var(--card);margin-top:56px;box-shadow:var(--shadow)}
-@media(min-width:860px){.stats{grid-template-columns:repeat(4,1fr)}}
-.stat{padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.stat:nth-child(2n){border-right:0}
-@media(min-width:860px){.stat{border-bottom:0}.stat:nth-child(2n){border-right:1px solid var(--line)}.stat:last-child{border-right:0}}
-.stat b{display:block;font-size:1.6rem;letter-spacing:-.02em}
-.stat small{color:var(--muted);font-size:.85rem}
-
-/* sections */
-section{padding:88px 0;border-top:1px solid var(--line)}
-section.alt{background:var(--bg2)}
-.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-h2{font-size:clamp(1.8rem,3.6vw,2.5rem);letter-spacing:-.03em;line-height:1.15;margin:10px 0 14px;font-weight:800}
-.lede{color:var(--muted);max-width:62ch;margin:0 0 40px;font-size:1.05rem}
-.grid{display:grid;gap:16px}
-.grid>*,.tok>*{min-width:0}
-@media(min-width:720px){.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:var(--shadow)}
-.card h3{margin:14px 0 6px;font-size:1.05rem;letter-spacing:-.01em}
-.card p{margin:0;color:var(--muted);font-size:.94rem}
-.ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent)}
-.ico svg{width:20px;height:20px}
-.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);margin-top:14px}
-
-/* steps */
-.steps{counter-reset:s}
-.step{position:relative;padding-left:56px}
-.step::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-weight:700;background:var(--card)}
-pre{margin:0;background:var(--code);border:1px solid var(--line);border-radius:12px;padding:18px 20px;overflow-x:auto;font-size:.85rem;line-height:1.7}
-pre .c{color:var(--muted)}
-
-/* tokenomics */
-.tok{display:grid;gap:40px;align-items:center}
-@media(min-width:860px){.tok{grid-template-columns:320px 1fr}}
-.donut{width:100%;max-width:320px;margin:0 auto;display:block}
-.legend{display:grid;gap:12px}
-.leg{display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
-.sw{width:14px;height:14px;border-radius:4px;flex:none}
-.leg b{font-size:1.25rem;min-width:56px}
-.leg div{flex:1}.leg small{display:block;color:var(--muted);font-size:.86rem}
-
-/* table */
-.tbl{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:.94rem}
-.tbl th,.tbl td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top}
-.tbl tr:last-child td{border-bottom:0}
-.tbl th{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:var(--bg2);font-weight:600}
-.tbl td:first-child{font-weight:600}
-.scroll{overflow-x:auto;border-radius:14px}
-
-/* addresses */
-.addr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
-.addr:last-child{border-bottom:0}
-.addr .k{font-size:.85rem;color:var(--muted);min-width:0}
-.addr code{display:block;color:var(--fg);font-size:.84rem;word-break:break-all;margin-top:2px}
-.copy{flex:none;border:1px solid var(--line);background:var(--bg2);color:var(--muted);border-radius:8px;padding:6px 10px;font:500 .78rem Inter,sans-serif;cursor:pointer}
-.copy:hover{color:var(--fg)}
-.status{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid var(--line)}
-.status.live{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
-.status.wait{color:var(--muted)}
-
-/* roadmap */
-.road{display:grid;gap:16px}
-@media(min-width:860px){.road{grid-template-columns:repeat(4,1fr)}}
-.ph{border-top:3px solid var(--line);padding-top:16px}
-.ph.done{border-color:var(--accent)}
-.ph small{color:var(--muted);font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-.ph h3{margin:6px 0;font-size:1.02rem}
-.ph p{margin:0;color:var(--muted);font-size:.9rem}
-
-.notice{border:1px solid var(--line);border-left:3px solid var(--accent2);border-radius:10px;padding:16px 20px;background:var(--card);color:var(--muted);font-size:.92rem}
-
-footer{border-top:1px solid var(--line);padding:56px 0 40px;color:var(--muted);font-size:.9rem}
-.fgrid{display:grid;gap:32px}
-@media(min-width:720px){.fgrid{grid-template-columns:2fr 1fr 1fr 1fr}}
-footer h4{color:var(--fg);font-size:.85rem;margin:0 0 12px}
-footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-footer a{text-decoration:none}footer a:hover{color:var(--fg)}
-.legal{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:.82rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
+<header id="top">
   <div class="wrap nav">
-    <a class="brand" href="#"><span class="mark">S</span>SKAL</a>
-    <nav class="links">
-      <a href="#security">Security</a>
-      <a href="#vault">Vault</a>
-      <a href="#tokenomics">Tokenomics</a>
-      <a href="#verify">Verify</a>
-      <a href="#addresses">Addresses</a>
-      <a href="https://github.com/bryankwandou/skal/blob/main/docs/BLUEPRINT.md">Blueprint</a>
+    <a class="brand" href="#" aria-label="SKAL home"><img src="logo.svg" alt="" width="32" height="32"><span>SKAL</span></a>
+    <nav class="links" aria-label="Sections">
+      <a href="#proof" data-i18n="nav.proof">Live proof</a>
+      <a href="#attack" data-i18n="nav.attack">Break the vault</a>
+      <a href="#vesting" data-i18n="nav.vesting">Vesting</a>
+      <a href="#cost" data-i18n="nav.cost">Cost</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </nav>
-    <a class="btn" href="https://github.com/bryankwandou/skal">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.7 1.7.3 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>
-      GitHub
-    </a>
+    <div class="nav-r">
+      <div class="lang" role="group" aria-label="Language">
+        <button data-lang="en" aria-pressed="true">EN</button>
+        <button data-lang="id" aria-pressed="false">ID</button>
+      </div>
+      <a class="btn sm ghost hide-s" href="https://github.com/bryankwandou/skal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.7 1.7.3 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>
+        GitHub
+      </a>
+    </div>
   </div>
 </header>
 
 <main>
-  <div class="wrap hero">
-    <span class="pill"><span class="dot"></span><span id="netpill">Live on Solana devnet · mainnet launch pending</span></span>
-    <h1>Rug vectors closed by <span>code</span>, not promises.</h1>
-    <p class="sub">SKAL (Save Kalimantan) is a fixed-supply Token-2022 asset on Solana. Nobody can mint more, nobody can freeze a wallet, and the creator's 14% is held by a 2,472-byte vault that has no admin key.</p>
-    <div class="cta">
-      <a class="btn primary" href="#verify">Verify it yourself</a>
-      <a class="btn" href="https://github.com/bryankwandou/skal/blob/main/docs/BLUEPRINT.md">Read the blueprint</a>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><b>1T</b><small>Fixed supply, 6 decimals</small></div>
-      <div class="stat"><b>2,472 B</b><small>Vault program size</small></div>
-      <div class="stat"><b>16 / 16</b><small>End-to-end tests passing</small></div>
-      <div class="stat"><b>0.0197 SOL</b><small>Total on-chain cost to ship</small></div>
-    </div>
-  </div>
-
-  <section id="security" class="alt">
-    <div class="wrap">
-      <div class="eyebrow">Security model</div>
-      <h2>Four questions every holder should ask</h2>
-      <p class="lede">Each answer is a property of an on-chain account. You do not need to trust this page; every row is checkable with a block explorer or the Solana CLI.</p>
-      <div class="grid g4">
-        <div class="card">
-          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M4 4l16 16"/></svg></div>
-          <h3>No new supply</h3>
-          <p>Mint authority is set to <code>null</code> in the launch transaction. Supply is final.</p>
-          <span class="tag">mintAuthority: null</span>
-        </div>
-        <div class="card">
-          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M4.9 4.9l14.2 14.2M2 12h20M4.9 19.1L19.1 4.9"/></svg></div>
-          <h3>No freezing</h3>
-          <p>Freeze authority is <code>null</code> from the moment the mint is created.</p>
-          <span class="tag">freezeAuthority: null</span>
-        </div>
-        <div class="card">
-          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-          <h3>No creator dump</h3>
-          <p>14% sits in a vesting vault: 90-day cliff, then linear release to day 365.</p>
-          <span class="tag">Vault, no admin</span>
-        </div>
-        <div class="card">
-          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 13h8M8 17h5"/></svg></div>
-          <h3>No metadata swap</h3>
-          <p>Name and symbol live on the mint (Token-2022 metadata). Update authority is removed.</p>
-          <span class="tag">updateAuthority: none</span>
-        </div>
+  <section class="hero">
+    <canvas id="rivers" aria-hidden="true"></canvas>
+    <div class="wrap hero-in">
+      <a class="pill" href="#proof"><span class="dot" id="hero-dot"></span><span id="hero-status">Checking devnet…</span></a>
+      <h1 data-i18n="hero.title">A token you can audit <em>from this page</em>.</h1>
+      <p class="sub" data-i18n="hero.sub">SKAL has no key that can print more coins, no key that can freeze your wallet, and the creator's 14% sits in a 2,472-byte vault with no owner. Each of those facts is read from Solana while you watch, and you can try to break the vault yourself.</p>
+      <div class="cta">
+        <a class="btn primary" href="#attack" data-i18n="hero.cta1">Try to break the vault</a>
+        <a class="btn ghost" href="#walkthrough" data-i18n="hero.cta2">Watch the two-minute tour</a>
       </div>
+      <dl class="stats">
+        <div><dt data-i18n="stat.supply">Fixed supply</dt><dd><span data-count="1" data-suffix="T">0</span></dd></div>
+        <div><dt data-i18n="stat.size">Vault size</dt><dd><span data-count="2472">0</span> B</dd></div>
+        <div><dt data-i18n="stat.tests">Tests passing</dt><dd><span data-count="16">0</span>/16</dd></div>
+        <div><dt data-i18n="stat.cost">Cost to ship</dt><dd><span data-count="0.0197" data-dec="4">0</span> SOL</dd></div>
+      </dl>
     </div>
   </section>
 
-  <section id="vault">
+  <section id="different" class="band">
     <div class="wrap">
-      <div class="eyebrow">The vault</div>
-      <h2>The schedule is the address</h2>
-      <p class="lede">The vault keeps no state account. Its vesting schedule is hashed into the seeds of a program-derived address, so the rules cannot be edited, only proven.</p>
-      <div class="grid g2" style="align-items:start">
-        <div class="grid steps" style="gap:28px">
-          <div class="step"><h3 style="margin:4px 0 6px">Derive</h3><p style="margin:0;color:var(--muted)"><code>PDA(dest_token, total ‖ start ‖ end)</code>. Change one number and you get a different address that holds nothing.</p></div>
-          <div class="step"><h3 style="margin:4px 0 6px">Compute</h3><p style="margin:0;color:var(--muted)">At call time the program reads the validator clock and computes how much is still locked, without 128-bit arithmetic.</p></div>
-          <div class="step"><h3 style="margin:4px 0 6px">Release</h3><p style="margin:0;color:var(--muted)">It signs one Token-2022 <code>TransferChecked</code> for <code>balance − locked</code>. Anyone may call it; tokens only go to the destination baked into the seeds.</p></div>
-          <div class="step"><h3 style="margin:4px 0 6px">Freeze the code</h3><p style="margin:0;color:var(--muted)">After deployment the upgrade authority is set to none with <code>--final</code>. Not even the creator can change the rules.</p></div>
-        </div>
-        <pre><span class="c">// vault/src/lib.rs — the whole release rule</span>
-fn vested(total: u64, start: i64, end: i64, t: i64) -> u64 {
-    if t >= end { total }
-    else if t <= start { 0 }
-    else {
-        let d = (end - start) as u64;
-        let e = (t - start) as u64;
-        (total / d) * e + (total % d) * e / d
-    }
-}
-
-<span class="c">// Release = balance − (total − vested(now))</span>
-<span class="c">// Signed by PDA([dest, total‖start‖end], bump)</span>
-<span class="c">// Token program pinned to Token-2022</span></pre>
-      </div>
-
-      <div class="scroll" style="margin-top:48px">
-        <table class="tbl">
-          <tr><th>Attack</th><th>Why it fails</th><th>Test</th></tr>
-          <tr><td>Fake schedule</td><td>Different seeds derive a different PDA that owns no tokens.</td><td><code>jadwal palsu</code> ✓</td></tr>
-          <tr><td>Fake token program</td><td>Only the Token-2022 program ID is accepted.</td><td><code>program token palsu</code> ✓</td></tr>
-          <tr><td>Redirect to another wallet</td><td>The destination is part of the PDA seeds.</td><td><code>penerima lain</code> ✓</td></tr>
-          <tr><td>Release before cliff</td><td>Nothing is vested before <code>start</code>.</td><td><code>sebelum cliff</code> ✓</td></tr>
-          <tr><td>Drain twice</td><td>Only <code>balance − locked</code> moves; zero releasable fails.</td><td><code>tidak ada yang bisa dilepas</code> ✓</td></tr>
+      <p class="eyebrow reveal" data-i18n="diff.eyebrow">Why it is different</p>
+      <h2 class="reveal" data-i18n="diff.title">Most new tokens ask you to trust the team. SKAL takes the team out of the picture.</h2>
+      <div class="scroll reveal">
+        <table class="cmp">
+          <thead><tr><th></th><th data-i18n="diff.h1">Typical new token</th><th class="us">SKAL</th></tr></thead>
+          <tbody>
+            <tr><td data-i18n="diff.r1">Can more coins be printed?</td><td class="bad" data-i18n="diff.r1a">Often yes, the mint key is kept</td><td class="good" data-i18n="diff.r1b">No. Mint key destroyed at launch</td></tr>
+            <tr><td data-i18n="diff.r2">Can your wallet be frozen?</td><td class="bad" data-i18n="diff.r2a">Sometimes, the freeze key is kept</td><td class="good" data-i18n="diff.r2b">No. A freeze key never existed</td></tr>
+            <tr><td data-i18n="diff.r3">Can the creator sell their share on day one?</td><td class="bad" data-i18n="diff.r3a">Usually yes</td><td class="good" data-i18n="diff.r3b">No. 90-day cliff, then linear over a year</td></tr>
+            <tr><td data-i18n="diff.r4">Can the name or logo be swapped later?</td><td class="bad" data-i18n="diff.r4a">Often yes</td><td class="good" data-i18n="diff.r4b">No. Metadata update key removed</td></tr>
+            <tr><td data-i18n="diff.r5">Can you check all of this yourself?</td><td class="bad" data-i18n="diff.r5a">Only with tools and know-how</td><td class="good" data-i18n="diff.r5b">Yes. This page reads it live</td></tr>
+          </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <section id="tokenomics" class="alt">
+  <section id="proof">
     <div class="wrap">
-      <div class="eyebrow">Tokenomics</div>
-      <h2>1,000,000,000,000 SKAL. Forever.</h2>
-      <p class="lede">Supply is minted once in the launch transaction and the mint authority is revoked in the same transaction.</p>
-      <div class="tok">
-        <svg class="donut" viewBox="0 0 42 42" role="img" aria-label="Distribution: 70% liquidity, 16% community, 14% vesting vault">
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--line)" stroke-width="6"/>
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--accent)" stroke-width="6" stroke-dasharray="70 30" stroke-dashoffset="25"/>
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--accent2)" stroke-width="6" stroke-dasharray="16 84" stroke-dashoffset="-45"/>
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--muted)" stroke-width="6" stroke-dasharray="14 86" stroke-dashoffset="-61"/>
-          <text x="21" y="20.5" text-anchor="middle" font-size="5" font-weight="800" fill="var(--fg)" font-family="Inter,sans-serif">1T</text>
-          <text x="21" y="25" text-anchor="middle" font-size="2.4" fill="var(--muted)" font-family="Inter,sans-serif">SKAL</text>
-        </svg>
-        <div class="legend">
-          <div class="leg"><span class="sw" style="background:var(--accent)"></span><b>70%</b><div>Liquidity pool<small>700B SKAL paired with SOL. LP tokens locked or burned at creation.</small></div></div>
-          <div class="leg"><span class="sw" style="background:var(--accent2)"></span><b>16%</b><div>Community<small>160B SKAL for distribution and educational programs.</small></div></div>
-          <div class="leg"><span class="sw" style="background:var(--muted)"></span><b>14%</b><div>Creator, vested<small>140B SKAL in the vault. 90-day cliff, linear to day 365.</small></div></div>
+      <p class="eyebrow reveal" data-i18n="proof.eyebrow">Live proof</p>
+      <h2 class="reveal" data-i18n="proof.title">Read straight from the chain, right now</h2>
+      <p class="lede reveal" data-i18n="proof.lede">Your browser asks a public Solana node for these values when the page loads. Nothing below is typed in by hand.</p>
+      <div class="netbar reveal">
+        <span class="small muted" data-i18n="proof.net">Network</span>
+        <div class="seg" role="group" aria-label="Network">
+          <button data-net="devnet" aria-pressed="true">Devnet</button>
+          <button data-net="mainnet" aria-pressed="false">Mainnet</button>
+        </div>
+        <span class="small muted mono" id="proof-slot"></span>
+      </div>
+      <div class="proofgrid">
+        <article class="pcard reveal" data-k="mintAuth"><h3 data-i18n="proof.c1">Mint key</h3><p class="val">…</p><p class="hint" data-i18n="proof.c1h">Must be empty. If empty, supply can never grow.</p></article>
+        <article class="pcard reveal" data-k="freezeAuth"><h3 data-i18n="proof.c2">Freeze key</h3><p class="val">…</p><p class="hint" data-i18n="proof.c2h">Must be empty. If empty, no wallet can be frozen.</p></article>
+        <article class="pcard reveal" data-k="supply"><h3 data-i18n="proof.c3">Total supply</h3><p class="val">…</p><p class="hint" data-i18n="proof.c3h">One trillion SKAL with six decimals.</p></article>
+        <article class="pcard reveal" data-k="meta"><h3 data-i18n="proof.c4">Name on the mint</h3><p class="val">…</p><p class="hint" data-i18n="proof.c4h">Stored inside the token itself, not on a server.</p></article>
+        <article class="pcard reveal" data-k="vault"><h3 data-i18n="proof.c5">Held by the vault</h3><p class="val">…</p><p class="hint" data-i18n="proof.c5h">The creator's share that the vault still holds.</p></article>
+        <article class="pcard reveal" data-k="program"><h3 data-i18n="proof.c6">Vault program</h3><p class="val">…</p><p class="hint" data-i18n="proof.c6h">Deployed and executable.</p></article>
+      </div>
+      <p class="small muted reveal" id="proof-note"></p>
+    </div>
+  </section>
+
+  <section id="attack" class="band">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="atk.eyebrow">Attack lab</p>
+      <h2 class="reveal" data-i18n="atk.title">Try to break the vault</h2>
+      <p class="lede reveal" data-i18n="atk.lede">Each button builds a real transaction against the devnet vault and asks a Solana node to dry-run it. No wallet, no fee, nothing changes on-chain. You see exactly what the program answers.</p>
+      <div class="lab reveal">
+        <div class="atk-list">
+          <button class="atk" data-atk="honest">
+            <span class="atk-k ok" data-i18n="atk.k0">Control</span>
+            <b data-i18n="atk.t0">Release what has vested</b>
+            <small data-i18n="atk.d0">The correct call. Should pass and move only the unlocked part.</small>
+          </button>
+          <button class="atk" data-atk="fake">
+            <span class="atk-k" data-i18n="atk.k1">Attack 1</span>
+            <b data-i18n="atk.t1">Lie about the schedule</b>
+            <small data-i18n="atk.d1">Claim the vault holds half as much, so more of it looks unlocked.</small>
+          </button>
+          <button class="atk" data-atk="redirect">
+            <span class="atk-k" data-i18n="atk.k2">Attack 2</span>
+            <b data-i18n="atk.t2">Send it to another wallet</b>
+            <small data-i18n="atk.d2">Keep the schedule, change where the tokens go.</small>
+          </button>
+          <button class="atk" data-atk="tokenprog">
+            <span class="atk-k" data-i18n="atk.k3">Attack 3</span>
+            <b data-i18n="atk.t3">Swap the token program</b>
+            <small data-i18n="atk.d3">Point the vault at a different program to misuse its signature.</small>
+          </button>
+        </div>
+        <div class="term" aria-live="polite">
+          <div class="term-h"><span></span><span></span><span></span><b>simulateTransaction · devnet</b></div>
+          <pre id="term"><span class="c" data-i18n="atk.idle">// Pick a scenario on the left.</span></pre>
+          <div class="verdict" id="verdict" hidden></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="verify">
+  <section id="how">
     <div class="wrap">
-      <div class="eyebrow">Don't trust, verify</div>
-      <h2>Check every claim from your terminal</h2>
-      <p class="lede">Requires the Solana CLI and <code>spl-token</code>. Replace <code>&lt;MINT&gt;</code> with the official mint listed below.</p>
-      <div class="grid g2">
-        <div>
-          <h3 style="margin:0 0 10px;font-size:1rem">Mint and freeze authority</h3>
-          <pre>spl-token display &lt;MINT&gt; -um
-<span class="c"># Mint authority: (not set)</span>
-<span class="c"># Freeze authority: (not set)</span></pre>
+      <p class="eyebrow reveal" data-i18n="how.eyebrow">How the vault works</p>
+      <h2 class="reveal" data-i18n="how.title">The schedule is baked into the address</h2>
+      <p class="lede reveal" data-i18n="how.lede">The vault stores nothing. Its address is computed from the release schedule and the destination wallet. Change one number and you are talking to an empty address that cannot sign for anything.</p>
+      <div class="flow reveal" aria-hidden="true">
+        <svg viewBox="0 0 960 240" class="flowsvg">
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ahp"/></marker></defs>
+          <g class="node"><rect x="10" y="40" width="200" height="80" rx="14"/><text x="110" y="76" class="t1">Schedule</text><text x="110" y="100" class="t2">total · start · end</text></g>
+          <g class="node"><rect x="10" y="150" width="200" height="60" rx="14"/><text x="110" y="186" class="t1">Destination</text></g>
+          <path class="wire" d="M210 80 C 290 80 280 115 348 115"/>
+          <path class="wire" d="M210 180 C 290 180 280 135 348 135"/>
+          <g class="node hl"><rect x="350" y="75" width="230" height="100" rx="14"/><text x="465" y="117" class="t1">Vault address</text><text x="465" y="143" class="t2">PDA(seeds, bump)</text></g>
+          <path class="wire" d="M580 125 L 688 125"/>
+          <g class="node"><rect x="690" y="20" width="260" height="210" rx="14"/><text x="820" y="58" class="t1">On every release</text><text x="820" y="96" class="t2">read the clock</text><text x="820" y="126" class="t2">locked = total − vested(now)</text><text x="820" y="156" class="t2">send balance − locked</text><text x="820" y="186" class="t2">only to destination</text></g>
+          <circle class="pulse" r="5"><animateMotion dur="3.2s" repeatCount="indefinite" path="M210 80 C 290 80 280 115 348 115 L 580 125 L 688 125"/></circle>
+          <circle class="pulse p2" r="5"><animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" path="M210 180 C 290 180 280 135 348 135 L 580 125 L 688 125"/></circle>
+        </svg>
+      </div>
+      <div class="grid g3">
+        <div class="card reveal"><h3 data-i18n="how.c1">No admin, no owner</h3><p data-i18n="how.c1d">There is no signer to set and no account that holds settings. Nobody has a key to this vault, including the person who wrote it.</p></div>
+        <div class="card reveal"><h3 data-i18n="how.c2">Anyone can trigger it</h3><p data-i18n="how.c2d">If the creator disappears, anyone can call release. The tokens still only travel to the wallet written into the address.</p></div>
+        <div class="card reveal"><h3 data-i18n="how.c3">Frozen after deploy</h3><p data-i18n="how.c3d">Once live on mainnet, the upgrade key is thrown away with one command. After that nobody can edit the rules.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vesting" class="band">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="vest.eyebrow">Vesting simulator</p>
+      <h2 class="reveal" data-i18n="vest.title">Slide through the creator's first year</h2>
+      <p class="lede reveal" data-i18n="vest.lede">This runs the same formula the vault runs on-chain, line for line.</p>
+      <div class="sim reveal">
+        <svg viewBox="0 0 600 240" class="chart" role="img" aria-label="Vesting curve">
+          <line x1="40" y1="200" x2="580" y2="200" class="axis"/>
+          <line x1="40" y1="20" x2="40" y2="200" class="axis"/>
+          <polygon id="area" class="area" points=""/>
+          <polyline id="curve" class="curve" points=""/>
+          <line id="cliff" class="cliffline" x1="0" y1="20" x2="0" y2="200"/>
+          <text id="cliff-t" class="ct" y="14" text-anchor="middle">cliff · day 90</text>
+          <line id="cursor" class="cursor" x1="40" y1="20" x2="40" y2="200"/>
+          <circle id="dotc" r="6" class="dotc" cx="40" cy="200"/>
+          <text x="40" y="222" class="ct">0</text><text x="580" y="222" class="ct" text-anchor="end">400 d</text>
+          <text x="34" y="24" class="ct" text-anchor="end">14%</text>
+        </svg>
+        <div class="sim-r">
+          <label for="day" class="small muted" data-i18n="vest.day">Days since launch</label>
+          <div class="dayv"><output id="dayout" for="day">0</output></div>
+          <input type="range" id="day" min="0" max="400" value="0" step="1">
+          <div class="kv"><span data-i18n="vest.locked">Still locked</span><b id="v-locked" class="mono">140,000,000,000</b></div>
+          <div class="kv"><span data-i18n="vest.free">Released to creator</span><b id="v-free" class="mono">0</b></div>
+          <div class="bar"><i id="v-bar"></i></div>
+          <p class="small muted" id="v-note"></p>
         </div>
-        <div>
-          <h3 style="margin:0 0 10px;font-size:1rem">Vault binary matches source</h3>
-          <pre>solana program dump -um &lt;VAULT&gt; v.so
+      </div>
+    </div>
+  </section>
+
+  <section id="tokenomics">
+    <div class="wrap tok">
+      <div>
+        <p class="eyebrow reveal" data-i18n="tok.eyebrow">Supply</p>
+        <h2 class="reveal" data-i18n="tok.title">One trillion SKAL, minted once</h2>
+        <p class="lede reveal" data-i18n="tok.lede">Every coin is created in a single transaction, and that same transaction destroys the key that created them.</p>
+        <div class="legend">
+          <div class="leg reveal"><i style="background:var(--a1)"></i><b>70%</b><div><span data-i18n="tok.l1">Liquidity pool</span><small data-i18n="tok.l1d">Paired with SOL. Pool tokens locked or burned.</small></div></div>
+          <div class="leg reveal"><i style="background:var(--a3)"></i><b>16%</b><div><span data-i18n="tok.l2">Community</span><small data-i18n="tok.l2d">Education programs and distribution.</small></div></div>
+          <div class="leg reveal"><i style="background:var(--a2)"></i><b>14%</b><div><span data-i18n="tok.l3">Creator, vested</span><small data-i18n="tok.l3d">Held by the vault. 90-day cliff, linear to day 365.</small></div></div>
+        </div>
+      </div>
+      <svg class="donut reveal" viewBox="0 0 42 42" role="img" aria-label="70% liquidity, 16% community, 14% creator vested">
+        <circle cx="21" cy="21" r="15.915" class="track"/>
+        <circle cx="21" cy="21" r="15.915" class="seg s1" style="--len:70;--off:25"/>
+        <circle cx="21" cy="21" r="15.915" class="seg s2" style="--len:16;--off:-45"/>
+        <circle cx="21" cy="21" r="15.915" class="seg s3" style="--len:14;--off:-61"/>
+        <text x="21" y="21.5" class="dn1">1T</text><text x="21" y="26" class="dn2">SKAL</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="cost" class="band">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="cost.eyebrow">Cost</p>
+      <h2 class="reveal" data-i18n="cost.title">The whole launch costs 0.0197 SOL</h2>
+      <p class="lede reveal" data-i18n="cost.lede">Solana charges rent for every byte a program occupies, so a smaller program is a cheaper one. The vault was written without a framework and trimmed to 2,472 bytes.</p>
+      <div class="bars reveal">
+        <div class="brow"><span data-i18n="cost.b1">Mint launch</span><div class="track"><i style="--w:18%"></i></div><b>0.0054</b></div>
+        <div class="brow"><span data-i18n="cost.b2">Vault deploy</span><div class="track"><i style="--w:47.7%"></i></div><b>0.0143</b></div>
+        <div class="brow total"><span data-i18n="cost.b3">Total</span><div class="track"><i style="--w:65.7%"></i></div><b>0.0197</b></div>
+        <div class="brow cap"><span data-i18n="cost.b4">Budget limit</span><div class="track"><i style="--w:100%"></i></div><b>0.0300</b></div>
+      </div>
+      <div class="grid g3 mt">
+        <div class="card reveal"><h3>2,472 B</h3><p data-i18n="cost.c1">Vault program after stripping debug sections. 143 lines of Rust, no allocator.</p></div>
+        <div class="card reveal"><h3>4,360 CU</h3><p data-i18n="cost.c2">Compute used by one release, measured on devnet. The default limit per instruction is 200,000.</p></div>
+        <div class="card reveal"><h3>≈ 1.02 SOL</h3><p data-i18n="cost.c3">What rent alone would be for a 200 KB program, a common size for framework-built code.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="walkthrough">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="walk.eyebrow">Walkthrough</p>
+      <h2 class="reveal" data-i18n="walk.title">A two-minute tour</h2>
+      <div class="video reveal">
+        <video controls preload="metadata" poster="media/poster.jpg" playsinline>
+          <source src="media/walkthrough.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section id="verify" class="band">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="ver.eyebrow">Verify from a terminal</p>
+      <h2 class="reveal" data-i18n="ver.title">Prefer the command line? Same checks, four commands.</h2>
+      <div class="grid g2">
+        <div class="reveal"><h3 class="h3s" data-i18n="ver.c1">Mint and freeze keys</h3><pre class="code">spl-token display &lt;MINT&gt; -um
+<span class="c"># Mint authority: (not set)</span>
+<span class="c"># Freeze authority: (not set)</span></pre></div>
+        <div class="reveal"><h3 class="h3s" data-i18n="ver.c2">Deployed code matches the source</h3><pre class="code">solana program dump -um &lt;VAULT&gt; v.so
 sha256sum v.so
 <span class="c"># 729572666d23a87adc0faeb747bc6599</span>
-<span class="c"># dc9efe556043b4708576764ae5588d6f</span></pre>
-        </div>
-        <div>
-          <h3 style="margin:0 0 10px;font-size:1rem">Vault is immutable</h3>
-          <pre>solana program show -um &lt;VAULT&gt;
-<span class="c"># Authority: none</span></pre>
-        </div>
-        <div>
-          <h3 style="margin:0 0 10px;font-size:1rem">Run the test suite</h3>
-          <pre>node client/test-skal.mjs &lt;VAULT&gt; payer.json \
+<span class="c"># dc9efe556043b4708576764ae5588d6f</span></pre></div>
+        <div class="reveal"><h3 class="h3s" data-i18n="ver.c3">Nobody can upgrade the vault</h3><pre class="code">solana program show -um &lt;VAULT&gt;
+<span class="c"># Authority: none</span></pre></div>
+        <div class="reveal"><h3 class="h3s" data-i18n="ver.c4">Run the full test suite</h3><pre class="code">node client/test-skal.mjs &lt;VAULT&gt; payer.json \
   https://api.devnet.solana.com
-<span class="c"># 16 lulus, 0 gagal</span></pre>
-        </div>
+<span class="c"># 16 lulus, 0 gagal</span></pre></div>
       </div>
     </div>
   </section>
 
-  <section id="addresses" class="alt">
+  <section id="addresses">
     <div class="wrap">
-      <div class="eyebrow">Official addresses</div>
-      <h2>If it is not listed here, it is not SKAL</h2>
-      <p class="lede">The canonical list lives in <a href="https://github.com/bryankwandou/skal/blob/main/docs/DEPLOYMENTS.md">docs/DEPLOYMENTS.md</a>. Always cross-check before trading.</p>
+      <p class="eyebrow reveal" data-i18n="addr.eyebrow">Official addresses</p>
+      <h2 class="reveal" data-i18n="addr.title">If an address is not on this list, it is not SKAL</h2>
+      <p class="lede reveal"><span data-i18n="addr.lede">The source of truth is</span> <a href="https://github.com/bryankwandou/skal/blob/main/docs/DEPLOYMENTS.md">docs/DEPLOYMENTS.md</a>.</p>
       <div class="grid g2">
-        <div class="card" style="padding:0">
-          <div class="addr"><div class="k">Mainnet-beta</div><span class="status wait" id="mstatus">Launch pending</span></div>
-          <div class="addr"><div class="k">SKAL mint<code id="m-mint">Pending launch</code></div></div>
-          <div class="addr"><div class="k">Vault program<code>5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ</code></div><button class="copy">Copy</button></div>
-          <div class="addr"><div class="k">Binary SHA-256<code>729572666d23a87adc0faeb747bc6599dc9efe556043b4708576764ae5588d6f</code></div><button class="copy">Copy</button></div>
-        </div>
-        <div class="card" style="padding:0">
-          <div class="addr"><div class="k">Devnet</div><span class="status live">● Live</span></div>
-          <div class="addr"><div class="k">Vault program<code>CW69TjeM9Xk8hFnqsvDZRYhGYcKXtnJj2N7VbJSQxz1o</code></div><button class="copy">Copy</button></div>
-          <div class="addr"><div class="k">Test mint<code>CCY5GpTR41RkG2KXH5rMxyeMTsmVZyTZRdrjfjbjZrV</code></div><button class="copy">Copy</button></div>
-          <div class="addr"><div class="k">Explorer<code><a href="https://explorer.solana.com/address/CW69TjeM9Xk8hFnqsvDZRYhGYcKXtnJj2N7VbJSQxz1o?cluster=devnet">explorer.solana.com ↗</a></code></div></div>
-        </div>
+        <div class="card flush reveal" id="addr-main"><div class="addr head"><b>Mainnet</b><span class="status" id="main-status" data-i18n="addr.pending">Launch pending</span></div></div>
+        <div class="card flush reveal" id="addr-dev"><div class="addr head"><b>Devnet</b><span class="status live" data-i18n="addr.live">Live</span></div></div>
       </div>
     </div>
   </section>
 
-  <section id="roadmap">
+  <section id="faq" class="band">
     <div class="wrap">
-      <div class="eyebrow">Roadmap</div>
-      <h2>Status</h2>
-      <p class="lede">Each phase is marked done only when its transaction is on-chain and listed in DEPLOYMENTS.md.</p>
+      <p class="eyebrow reveal" data-i18n="road.eyebrow">Where things stand</p>
       <div class="road">
-        <div class="ph done"><small>Done</small><h3>Research</h3><p>Ringan, a 1,352-byte custom token, sets the size and cost baseline.</p></div>
-        <div class="ph done"><small>Done</small><h3>Vault + devnet</h3><p>Pinocchio vault deployed on devnet. 16/16 end-to-end tests pass.</p></div>
-        <div class="ph"><small>Next</small><h3>Mainnet launch</h3><p>Deploy and finalize the vault, launch the mint, revoke authorities.</p></div>
-        <div class="ph"><small>Later</small><h3>Liquidity</h3><p>SKAL/SOL pool on a Token-2022 DEX, LP locked or burned. Separately funded.</p></div>
+        <div class="ph done reveal"><small data-i18n="road.done">Done</small><h3 data-i18n="road.p1">Research</h3><p data-i18n="road.p1d">Ringan, a 1,352-byte token program, set the floor for size and cost.</p></div>
+        <div class="ph done reveal"><small data-i18n="road.done">Done</small><h3 data-i18n="road.p2">Vault on devnet</h3><p data-i18n="road.p2d">Deployed, with 16 of 16 end-to-end tests passing on the public devnet.</p></div>
+        <div class="ph reveal" id="ph-main"><small data-i18n="road.next">Next</small><h3 data-i18n="road.p3">Mainnet</h3><p data-i18n="road.p3d">Deploy and freeze the vault, launch the mint, publish the addresses.</p></div>
+        <div class="ph reveal"><small data-i18n="road.later">Later</small><h3 data-i18n="road.p4">Liquidity</h3><p data-i18n="road.p4d">SKAL/SOL pool with pool tokens locked. Funded separately.</p></div>
       </div>
-      <p class="notice" style="margin-top:48px"><b>Educational project.</b> The name Save Kalimantan is used for teaching purposes. SKAL raises no funds, promises no returns, is not an investment, and is not affiliated with any organization. No third-party audit has been performed.</p>
+
+      <h2 class="mt2 reveal" data-i18n="faq.title">Questions people ask</h2>
+      <div class="faq">
+        <details class="reveal"><summary data-i18n="faq.q1">Is SKAL an investment?</summary><p data-i18n="faq.a1">No. SKAL is an educational project. It raises no money, promises no return, and has no team selling it to you. It exists to show what a token looks like when the usual ways of cheating holders are removed in code.</p></details>
+        <details class="reveal"><summary data-i18n="faq.q2">Why the name Save Kalimantan?</summary><p data-i18n="faq.a2">Kalimantan's forests and its hornbill, the bird in the logo, are a reminder that some things deserve protection from short-term extraction. The project is not affiliated with any organization working there.</p></details>
+        <details class="reveal"><summary data-i18n="faq.q3">What stops the creator from changing the vault later?</summary><p data-i18n="faq.a3">On mainnet the upgrade key is set to none right after deployment, and from then on the code is fixed. You can confirm it with solana program show, which reports the authority as none.</p></details>
+        <details class="reveal"><summary data-i18n="faq.q4">What if the creator loses interest?</summary><p data-i18n="faq.a4">Nothing breaks. Anyone can call release, and tokens can only go to the wallet that is part of the vault's address.</p></details>
+        <details class="reveal"><summary data-i18n="faq.q5">Has it been audited?</summary><p data-i18n="faq.a5">Not by a third party. The vault is 143 lines so it can be read in one sitting, the test suite covers each known attack, and the attack lab above lets you rerun those attacks yourself.</p></details>
+      </div>
+      <p class="notice reveal" data-i18n="notice">Educational project. Not financial advice, not an offer, and not affiliated with any organization.</p>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap">
-    <div class="fgrid">
-      <div><a class="brand" href="#"><span class="mark">S</span>SKAL</a><p style="margin:14px 0 0;max-width:36ch">A Token-2022 asset whose creator allocation is locked by a stateless Pinocchio vault.</p></div>
-      <div><h4>Docs</h4><ul>
-        <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/BLUEPRINT.md">Blueprint</a></li>
-        <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/DEPLOY.md">Deploy runbook</a></li>
-        <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/RINGAN.md">Ringan</a></li>
-      </ul></div>
-      <div><h4>Trust</h4><ul>
-        <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/DEPLOYMENTS.md">Deployments</a></li>
-        <li><a href="https://github.com/bryankwandou/skal/blob/main/SECURITY.md">Security</a></li>
-        <li><a href="https://github.com/bryankwandou/skal/tree/main/vault/src">Vault source</a></li>
-      </ul></div>
-      <div><h4>Project</h4><ul>
-        <li><a href="https://github.com/bryankwandou/skal">GitHub</a></li>
-        <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/id/SKAL.md">Bahasa Indonesia</a></li>
-        <li><a href="https://github.com/bryankwandou/skal/blob/main/LICENSE">MIT License</a></li>
-      </ul></div>
-    </div>
-    <div class="legal"><span>© 2026 SKAL contributors · MIT</span><span>Built on Solana · Token-2022 · Pinocchio</span></div>
+  <div class="wrap fgrid">
+    <div><a class="brand" href="#"><img src="logo.svg" alt="" width="28" height="28"><span>SKAL</span></a><p class="small muted" data-i18n="foot.tag">A Solana token whose promises are enforced by code you can read.</p></div>
+    <div><h4 data-i18n="foot.docs">Docs</h4><ul>
+      <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/BLUEPRINT.md">Blueprint</a></li>
+      <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/DEPLOY.md">Runbook</a></li>
+      <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/RINGAN.md">Ringan</a></li></ul></div>
+    <div><h4 data-i18n="foot.trust">Trust</h4><ul>
+      <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/DEPLOYMENTS.md">Deployments</a></li>
+      <li><a href="https://github.com/bryankwandou/skal/blob/main/SECURITY.md">Security</a></li>
+      <li><a href="https://github.com/bryankwandou/skal/tree/main/vault/src">Vault source</a></li></ul></div>
+    <div><h4 data-i18n="foot.proj">Project</h4><ul>
+      <li><a href="https://github.com/bryankwandou/skal">GitHub</a></li>
+      <li><a href="https://github.com/bryankwandou/skal/blob/main/docs/id/SKAL.md">Bahasa Indonesia</a></li>
+      <li><a href="https://github.com/bryankwandou/skal/blob/main/LICENSE">MIT License</a></li></ul></div>
   </div>
+  <div class="wrap legal"><span>© 2026 SKAL contributors · MIT</span><span>Solana · Token-2022 · Pinocchio</span></div>
 </footer>
 
-<script>
-document.querySelectorAll(".copy").forEach(function (b) {
-  b.addEventListener("click", function () {
-    var t = b.parentElement.querySelector("code").textContent.trim();
-    try { navigator.clipboard.writeText(t); b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1400); } catch (e) {}
-  });
-});
-</script>
+<script src="https://unpkg.com/@solana/web3.js@1.98.0/lib/index.iife.min.js"></script>
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

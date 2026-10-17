@@ -31,7 +31,7 @@ The deployer needs at least 0.0095 SOL to leave a margin for fees.
 cd client && node launch.mjs https://api.mainnet-beta.solana.com ~/.config/solana/ringan-mainnet.json 5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ ""
 ```
 
-The metadata URI is locked at launch. An empty URI is final; pass a real URI only if it is already permanent.
+Run this from Bash, not Windows PowerShell 5.1: PowerShell drops the empty `""` argument, which shifts the cliff and end days into the wrong slots. The metadata URI is locked at launch. An empty URI is final; pass a real URI only if it is already permanent.
 
 Keep the generated `launch-<mint>.json`. Its `total`, `start`, `end` and `bump` are required to build `Release`. Record mint, vault PDA, vault token account and both signatures in DEPLOYMENTS.md.
 

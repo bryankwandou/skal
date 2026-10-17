@@ -1,0 +1,27 @@
+// Official SKAL addresses. Keep in sync with docs/DEPLOYMENTS.md.
+// A field set to null means "not launched yet"; the page shows it as pending.
+window.SKAL = {
+  devnet: {
+    rpc: "https://api.devnet.solana.com",
+    cluster: "devnet",
+    vault: "CW69TjeM9Xk8hFnqsvDZRYhGYcKXtnJj2N7VbJSQxz1o",
+    // Demo launch whose vesting is already running, so the attack lab has something to release.
+    mint: "9kcZo6DqzeZfZDqp9WRn3c95N1bJAgdLANWcgMGRU7YT",
+    dest: "Fe2Sp9e7N8hyAdpWBifd9YVvPtdSWtKTaYsQg4vB6mpd",
+    pda: "EDXgLoukPV2B829Y73xxeVUHNsX699agqvRBhEGgy42P",
+    vaultToken: "FNVoCLY25i9sV19HaafHGJD2EaTbjCujHfsadcFibwid",
+    total: "140000000000000000", start: "1789646245", end: "1821182245", bump: 255,
+    // Any funded devnet account works as the fee payer of a dry run; nothing is signed.
+    simPayer: "8dr9rMNaLsCvCpL4kbzj3mkPTfAAhyHhiXZhZxBGCWfr",
+    // A token account of a different SKAL launch, used as the "other wallet" in attack 2.
+    otherDest: "6GRRw51PVPN6VYhwMDrAucYx8Pwp1eY83BqMhgVb6Yam",
+  },
+  mainnet: {
+    rpc: "https://api.mainnet-beta.solana.com",
+    cluster: "mainnet-beta",
+    vault: "5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ",
+    mint: null,
+    vaultToken: null,
+  },
+  sha256: "729572666d23a87adc0faeb747bc6599dc9efe556043b4708576764ae5588d6f",
+};

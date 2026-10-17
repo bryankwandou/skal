@@ -24,3 +24,6 @@ ringan/
 
 # Vercel
 .vercel/
+
+# Local preview config
+.claude/
