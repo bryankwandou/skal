@@ -1,4 +1,6 @@
-# Listing SKAL v1 dengan logo, tanpa mint ulang
+# Listing SKAL dengan logo
+
+SKAL v2 (mint `HhBdvukoHW9ELKp1KsFTNvQH1g7mLD76QFhUX1TAsPc4`, pool `Bo7L48UoZz9PwCq9tZNumLWrt8L2ojSQ59haNcciu6D1`) sudah membawa logo di metadata on-chain, jadi wallet menampilkannya tanpa formulir. Formulir di bawah tetap berguna untuk v1 dan untuk melengkapi situs/sosial di explorer.
 
 Metadata on-chain SKAL v1 terkunci dengan URI kosong, jadi wallet yang hanya membaca chain (Phantom, Solflare) tidak akan pernah menampilkan logo. Explorer dan agregator punya database token sendiri, dan beberapa menerima logo lewat formulir gratis.
 
