@@ -23,10 +23,11 @@ Metadata on-chain SKAL v1 terkunci dengan URI kosong, jadi wallet yang hanya mem
 | Logo (SVG) | https://savekalimantan.vercel.app/token/logo.svg |
 | Pool | Meteora DAMM v2 `9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe`, LP terkunci 100% |
 | Kode sumber | https://github.com/bryankwandou/skal |
+| Email kontak | nayrbryanGaming02@gmail.com (tercantum di footer situs) |
 | Deskripsi | Token Solana Token-2022 dengan supply tetap 1 triliun. Mint dan freeze authority dicabut. 14% untuk pembuat dikunci di vault on-chain yang tidak bisa diubah (cliff 90 hari, rilis linear sampai hari 365). 70% di pool Meteora dengan likuiditas terkunci permanen. |
 
 ## Yang masih kurang (harus dari pemilik proyek)
 
-1. **Email kontak.** Solscan meminta email di domain proyek, atau email pengirim yang tercantum di situs. Situs SKAL belum mencantumkan email.
+1. ~~Email kontak~~: `nayrbryanGaming02@gmail.com`, sudah tercantum di footer situs.
 2. **Akun sosial aktif** (misalnya X atau Telegram). Solscan memakai ini untuk reputasi "Neutral"; tanpa itu logo bisa tetap disembunyikan.
 3. **Pengiriman formulir** dilakukan pemilik proyek atau atas izinnya, karena memuat data kontak.
