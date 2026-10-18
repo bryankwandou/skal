@@ -17,17 +17,17 @@ Metadata on-chain SKAL v1 terkunci dengan URI kosong, jadi wallet yang hanya mem
 |---|---|
 | Nama | Save Kalimantan |
 | Simbol | SKAL |
-| Mint | `5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS` |
+| Mint | `HhBdvukoHW9ELKp1KsFTNvQH1g7mLD76QFhUX1TAsPc4` (v2) |
 | Jaringan | Solana (Token-2022) |
 | Desimal | 6 |
 | Situs | https://savekalimantan.vercel.app |
 | Logo (PNG 512 px) | https://savekalimantan.vercel.app/token/logo.png |
 | Logo (SVG) | https://savekalimantan.vercel.app/token/logo.svg |
-| Pool | Meteora DAMM v2 `9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe`, LP terkunci 100% |
+| Pool | Meteora DAMM v2 `Bo7L48UoZz9PwCq9tZNumLWrt8L2ojSQ59haNcciu6D1`, LP terkunci 100% |
 | Kode sumber | https://github.com/bryankwandou/skal |
 | X (Twitter) | https://x.com/savekalimantan |
 | Email kontak | nayrbryanGaming02@gmail.com (tercantum di footer situs) |
-| Deskripsi | Token Solana Token-2022 dengan supply tetap 1 triliun. Mint dan freeze authority dicabut. 14% untuk pembuat dikunci di vault on-chain yang tidak bisa diubah (cliff 90 hari, rilis linear sampai hari 365). 70% di pool Meteora dengan likuiditas terkunci permanen. |
+| Deskripsi | Token Solana Token-2022 dengan supply tetap 1 triliun. Mint dan freeze authority dicabut. 70% di pool Meteora dengan likuiditas terkunci permanen. 30% dipegang wallet pembuat untuk pembuat dan komunitas, tidak dikunci. Proyek edukasi, bukan investasi. |
 
 ## Yang masih kurang (harus dari pemilik proyek)
 

@@ -2,7 +2,31 @@
 
 Official SKAL addresses are listed here and nowhere else. Any address not on this page is not SKAL.
 
-## Mainnet-beta
+## Mainnet-beta: SKAL v2 (current, with logo)
+
+Launched 2026-10-18. Mint and freeze authorities revoked, metadata locked with a logo URI, pool LP locked. **The creator's share is not locked**: no vesting vault is used in v2.
+
+| | |
+|---|---|
+| **SKAL v2 mint** | `HhBdvukoHW9ELKp1KsFTNvQH1g7mLD76QFhUX1TAsPc4` |
+| Metadata URI | `https://savekalimantan.vercel.app/token/skal.json` (logo `token/logo.png`, 512×512) |
+| Creator token account | `HmQ3MtgcNuRsdRkUPTKYyk4U3yeJt9EGbi7VtHUNAXnU` (wallet `3bZ1Jj16o4qdcpNx2EGTZ5eXTZreGYBZx4pCLPGPaVqb`) |
+| Distribution | 70% pool, 30% creator wallet (14% creator + 16% community), unlocked |
+| Launch signatures | `Vat21aGxnxQRDxP9mowMymdhnNzHHi7fAvuihprRypM6mkkZimkJPx1QT9rCgarDZWYtkbEdEbZN4rJ5W888suN`, `29LfrGBkSp51RUBr1Cvm462CfhkkTAD4fU1wcWNWWiZztQikbAHNeEabb3MEX6q7VJ3RCP1Qj2YszZvqA6omWMeL` |
+| Measured launch cost | 0.00414 SOL |
+| **Liquidity pool** | `Bo7L48UoZz9PwCq9tZNumLWrt8L2ojSQ59haNcciu6D1` (Meteora DAMM v2, SKAL/SOL) |
+| Pool position / NFT | `4jhr59bzGNgTqhbrswhrGEXdrRKRZex8vDzdMGVv6rNg` / `36CukuBs7oTGnuy6r37HcsFpp2912YAWVg5h2GjYDhZa` |
+| Pool signature | `6EndQ5RvyhRGJJ88z2J34v4x2DZ4tVdw2qmBgQrrhF3awkjYs2pMrT3hGuZ9F73YtdyKJR8HeNhFNPj1d1d7TrG` |
+| Pool deposit | 700,000,000,000 SKAL, 0 SOL, start price 1e-11 SOL per SKAL, 1% swap fee |
+| LP | 100% permanently locked |
+| Measured pool cost | 0.017998281 SOL |
+| Listed | Jupiter (routable, icon shown), DexScreener |
+
+Devnet rehearsal of v2: mint `EPtMNvmP2vNkyC4em6y4M1mKyC3jYcnxSFSxhXsAa5zD`, pool `B2fdugcsABSjYAYWDe7eH7sMsuVEmdG6bhP4Absy8K1A`.
+
+## Mainnet-beta: SKAL v1 (vault-locked, no logo)
+
+v1 stays on-chain and keeps every guarantee below, including the vested 14%. Its metadata URI is empty and locked, so it can never show a logo. That is why v2 exists.
 
 Launched 2026-10-17. Vault immutable, mint and freeze authorities revoked, metadata locked, pool LP locked.
 

@@ -27,7 +27,9 @@ SKAL is a fixed-supply token built on the Token-2022 standard. The four question
 
 **Website:** https://savekalimantan.vercel.app (mirror: https://bryankwandou.github.io/skal/) · **Walkthrough video:** [site/media/walkthrough.mp4](site/media/walkthrough.mp4)
 
-**Trade:** [Jupiter](https://jup.ag/swap/SOL-5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS) · [Meteora pool](https://app.meteora.ag/dammv2/9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe) · [DexScreener](https://dexscreener.com/solana/9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe) · [Solscan](https://solscan.io/token/5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS)
+**Trade SKAL v2:** [Jupiter](https://jup.ag/swap/SOL-HhBdvukoHW9ELKp1KsFTNvQH1g7mLD76QFhUX1TAsPc4) · [Meteora pool](https://app.meteora.ag/dammv2/Bo7L48UoZz9PwCq9tZNumLWrt8L2ojSQ59haNcciu6D1) · [DexScreener](https://dexscreener.com/solana/Bo7L48UoZz9PwCq9tZNumLWrt8L2ojSQ59haNcciu6D1) · [Solscan](https://solscan.io/token/HhBdvukoHW9ELKp1KsFTNvQH1g7mLD76QFhUX1TAsPc4)
+
+> **Two versions.** **v2** (`HhBd…sPc4`, current) carries a logo, has no mint or freeze authority and a permanently locked pool, but the creator's 30% is **not** locked. **v1** (`5nyS…npmS`) keeps the vesting vault but can never show a logo. The vault proofs below apply to v1.
 
 ![SKAL landing page](docs/img/hero.png)
 
@@ -61,7 +63,8 @@ The attack lab builds real transactions against the devnet vault and dry-runs th
 | Distribution | 70% pool, 14% creator vested (90-day cliff, linear to day 365), 16% community |
 | Vault program size | 2,472 bytes (SBPF v3) |
 | On-chain cost to ship | 0.0377 SOL: 0.0054 mint + 0.0143 vault + 0.0180 pool rent |
-| Mainnet mint | [`5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS`](https://explorer.solana.com/address/5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS) |
+| Mainnet mint v2 | [`HhBdvukoHW9ELKp1KsFTNvQH1g7mLD76QFhUX1TAsPc4`](https://explorer.solana.com/address/HhBdvukoHW9ELKp1KsFTNvQH1g7mLD76QFhUX1TAsPc4), pool [`Bo7L…u6D1`](https://explorer.solana.com/address/Bo7L48UoZz9PwCq9tZNumLWrt8L2ojSQ59haNcciu6D1), creator share unlocked |
+| Mainnet mint v1 | [`5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS`](https://explorer.solana.com/address/5nySYzo5RxuefMYnKztHaAGbwrEBBtrFiv1g5XVqnpmS) |
 | Mainnet vault | [`5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ`](https://explorer.solana.com/address/5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ) (immutable) |
 | Liquidity pool | [`9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe`](https://explorer.solana.com/address/9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe) on Meteora DAMM v2: 70% of supply, LP 100% permanently locked, 0.0180 SOL rent |
 | Devnet | Live, 16/16 end-to-end tests passing ([addresses](docs/DEPLOYMENTS.md)) |
