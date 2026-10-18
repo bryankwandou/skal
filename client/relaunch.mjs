@@ -18,9 +18,13 @@ const RPC = "https://api.mainnet-beta.solana.com";
 const WALLET = join(homedir(), ".config", "solana", "ringan-mainnet.json");
 const VAULT = "5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ";
 const URI = "https://savekalimantan.vercel.app/token/skal.json";
-const NEED_LAMPORTS = 24_000_000;
+// Biaya terukur: mint v2 dengan URI 0,0056538 SOL (devnet) + pool 0,017998281 SOL (mainnet) = 0,0236521 SOL,
+// sudah termasuk biaya transaksi. Ditambah cadangan 0,00005 SOL.
+const NEED_LAMPORTS = 23_700_000;
 const DONE = "relaunch.done.json";
 const STATE = "relaunch.state.json";
+const LAUNCHED = "relaunch.launch.json"; // mint v2 sudah dibuat, pool belum: lanjutkan tanpa mint ulang
+const POOL_LAMPORTS = 18_050_000;
 const V1_POOL = new PublicKey("9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe");
 // Bagian fee yang diterima posisi per SOL volume: 1% fee dikurangi bagian Meteora, diukur dari pembelian pertama.
 const LP_FEE_PER_SOL = 0.0082;
@@ -52,19 +56,20 @@ if (it.state !== "open" || rejected || down > up) {
   if (!dry) writeFileSync(DONE, JSON.stringify({ rejectedAt: new Date().toISOString(), up, down, state: it.state }, null, 2));
   process.exit(0);
 }
+const NEED = existsSync(LAUNCHED) ? POOL_LAMPORTS : NEED_LAMPORTS;
 const signer = loadKeypair(WALLET), wallet = signer.publicKey;
 const connection = new Connection(RPC, "confirmed");
 const fees = await claimFees(connection, signer, V1_POOL, !dry);
 const balance = await connection.getBalance(wallet);
 const funds = balance + (fees.signatures.length ? 0 : Math.round(fees.claimableSol * 1e9));
-const status = { issueState: it.state, rejected, up, down, balanceSol: balance / 1e9, unclaimedFeeSol: fees.signatures.length ? 0 : fees.claimableSol, feeClaims: fees.signatures, needSol: NEED_LAMPORTS / 1e9 };
+const status = { issueState: it.state, rejected, up, down, balanceSol: balance / 1e9, unclaimedFeeSol: fees.signatures.length ? 0 : fees.claimableSol, feeClaims: fees.signatures, needSol: NEED / 1e9 };
 console.log(status);
 
-if (balance < NEED_LAMPORTS) {
+if (balance < NEED) {
   // Komentar hanya saat pertama kali atau saat dana bertambah, supaya eksekusi harian tidak membanjiri issue.
   const last = existsSync(STATE) ? JSON.parse(readFileSync(STATE, "utf8")).fundsLamports : -1;
   if (funds > last) {
-    const missing = (NEED_LAMPORTS - funds) / 1e9;
+    const missing = (NEED - funds) / 1e9;
     comment([
       `Masa komentar selesai tanpa keberatan (👍 ${up}, 👎 ${down}). Proposal disetujui dan menunggu dana dari fee trading.`,
       "",
@@ -81,10 +86,17 @@ if (balance < NEED_LAMPORTS) {
 }
 if (dry) { console.log("[dry] semua syarat terpenuhi; berhenti sebelum transaksi."); process.exit(0); }
 
-const launchesBefore = readdirSync(".");
-node("launch.mjs", RPC, WALLET, VAULT, URI);
-const [launchFile] = newest("launch-", launchesBefore);
-const launch = JSON.parse(readFileSync(launchFile, "utf8"));
+let launch;
+if (existsSync(LAUNCHED)) {
+  launch = JSON.parse(readFileSync(LAUNCHED, "utf8"));
+  console.log(`Melanjutkan: mint v2 ${launch.mint} sudah ada, tinggal pool.`);
+} else {
+  const launchesBefore = readdirSync(".");
+  node("launch.mjs", RPC, WALLET, VAULT, URI);
+  const [launchFile] = newest("launch-", launchesBefore);
+  launch = JSON.parse(readFileSync(launchFile, "utf8"));
+  writeFileSync(LAUNCHED, JSON.stringify(launch, null, 2));
+}
 
 const poolsBefore = readdirSync(".");
 node("pool.mjs", RPC, WALLET, launch.mint, "--send");

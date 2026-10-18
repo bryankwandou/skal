@@ -32,3 +32,4 @@ ringan/
 .vercel
 client/relaunch.done.json
 client/relaunch.state.json
+client/relaunch.launch.json
