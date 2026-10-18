@@ -9,7 +9,7 @@ Proposal ini menggantikan bagian alokasi di proposal #1. Bagian lain tidak berub
 | | Proposal #1 | Proposal ini |
 |---|---|---|
 | Jatah pembuat 14% (140 miliar SKAL) | Vault vesting `5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ`, cliff 90 hari, linear sampai hari 365 | Tidak dikunci, di dompet `3bZ1Jj16o4qdcpNx2EGTZ5eXTZreGYBZx4pCLPGPaVqb` |
-| Cara eksekusi | Otomatis setiap hari oleh tugas terjadwal | Manual oleh pendiri dengan `node client/relaunch.mjs 2 --unlocked` |
+| Cara eksekusi | Otomatis setiap hari oleh tugas terjadwal | Otomatis setiap hari oleh tugas terjadwal, `node client/relaunch.mjs 2 --unlocked` |
 
 ## Yang tetap
 
@@ -28,6 +28,6 @@ Tanpa vesting, pembuat bisa menjual 14% (dan 16% komunitas yang dipegangnya) kap
 
 - Masa komentar 24 jam sejak issue ini dibuat.
 - Proposal batal jika issue ditutup, diberi label `rejected`, atau 👎 lebih banyak dari 👍. Jika batal, proposal #1 (vesting) yang berlaku.
-- Jika lolos, pendiri menjalankan peluncuran secara manual dan hasilnya (alamat mint, pool, tanda tangan transaksi) dikomentari otomatis di issue ini.
+- Jika lolos, tugas terjadwal menjalankan peluncuran dan hasilnya (alamat mint, pool, tanda tangan transaksi) dikomentari otomatis di issue ini.
 
 Kode: https://github.com/bryankwandou/skal (`client/launch.mjs`, `client/relaunch.mjs`). Mode tanpa vault diuji di devnet: mint `E4paMmJQcnHXgRVPAKnuvk81EUQsWTapUUJewXbfR7ph`, biaya 0,00414 SOL.

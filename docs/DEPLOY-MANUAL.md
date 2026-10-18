@@ -1,6 +1,6 @@
 # SOP deploy manual SKAL v2 (jatah pembuat unlocked)
 
-Semua langkah dijalankan pendiri sendiri dari folder repo. Tugas terjadwal otomatis untuk proposal #1 sudah dimatikan, jadi tidak ada transaksi yang terkirim tanpa perintah di bawah.
+Langkah 1 sudah dijalankan (issue #2). Langkah 3 dan 4 dijalankan otomatis setiap hari pukul 19.45 WITA oleh tugas terjadwal `skal-v2-relaunch-proposal` dengan `node relaunch.mjs 2 --unlocked`; perintah di bawah tetap bisa dipakai manual. Proposal #1 tidak lagi dieksekusi otomatis.
 
 ## 1. Umumkan proposal amandemen
 
