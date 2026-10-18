@@ -1,5 +1,6 @@
 // Eksekusi proposal SKAL v2 (relaunch dengan logo) setelah masa komentar 24 jam.
-// node relaunch.mjs <issue-number> [--dry]
+// node relaunch.mjs <issue-number> [--dry] [--unlocked]
+// --unlocked: 14% pembuat tidak masuk vault vesting, langsung bebas di wallet deployer (proposal #2).
 // Berjalan hanya jika: issue masih open, tidak berlabel "rejected", 👎 tidak lebih banyak dari 👍,
 // dan saldo deployer >= 0,0240 SOL. Dana berasal dari fee trading pool v1: fee diklaim dulu ke deployer.
 // Hasilnya dikomentari ke issue. Aman dijalankan berulang (misalnya harian); hanya bisa sukses sekali.
@@ -11,8 +12,9 @@ import { join } from "node:path";
 import { loadKeypair } from "./skal.mjs";
 import { claimFees } from "./claim-fees.mjs";
 
-const [issue, flag] = process.argv.slice(2);
-const dry = flag === "--dry";
+const [issue, ...flags] = process.argv.slice(2);
+const dry = flags.includes("--dry");
+const unlocked = flags.includes("--unlocked");
 const REPO = "bryankwandou/skal";
 const RPC = "https://api.mainnet-beta.solana.com";
 const WALLET = join(homedir(), ".config", "solana", "ringan-mainnet.json");
@@ -40,7 +42,7 @@ const comment = (body) => (dry ? console.log(`[dry] comment:\n${body}`) : gh("is
 const node = (...a) => execFileSync(process.execPath, a, { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] });
 const newest = (prefix, before) => readdirSync(".").filter((f) => f.startsWith(prefix) && f.endsWith(".json") && !before.includes(f));
 
-if (!issue) throw new Error("usage: node relaunch.mjs <issue-number> [--dry]");
+if (!issue) throw new Error("usage: node relaunch.mjs <issue-number> [--dry] [--unlocked]");
 if (existsSync(DONE)) { console.log(`Sudah dieksekusi: ${readFileSync(DONE, "utf8")}`); process.exit(0); }
 
 const it = JSON.parse(gh("api", `repos/${REPO}/issues/${issue}`));
@@ -92,7 +94,7 @@ if (existsSync(LAUNCHED)) {
   console.log(`Melanjutkan: mint v2 ${launch.mint} sudah ada, tinggal pool.`);
 } else {
   const launchesBefore = readdirSync(".");
-  node("launch.mjs", RPC, WALLET, VAULT, URI);
+  node("launch.mjs", RPC, WALLET, unlocked ? "none" : VAULT, URI);
   const [launchFile] = newest("launch-", launchesBefore);
   launch = JSON.parse(readFileSync(launchFile, "utf8"));
   writeFileSync(LAUNCHED, JSON.stringify(launch, null, 2));
@@ -103,12 +105,13 @@ node("pool.mjs", RPC, WALLET, launch.mint, "--send");
 const [poolFile] = newest("pool-", poolsBefore);
 const pool = JSON.parse(readFileSync(poolFile, "utf8"));
 
-const result = { executedAt: new Date().toISOString(), mint: launch.mint, vaultToken: launch.vaultToken, pool: pool.pool, launchSignatures: launch.signatures, poolSignature: pool.signature, costSol: launch.costSol + pool.costSol };
+const result = { executedAt: new Date().toISOString(), mint: launch.mint, creatorShare: launch.creatorShareUnlocked ? "unlocked" : `vault ${launch.vaultToken}`, pool: pool.pool, launchSignatures: launch.signatures, poolSignature: pool.signature, costSol: launch.costSol + pool.costSol };
 writeFileSync(DONE, JSON.stringify(result, null, 2));
 comment([
   "Proposal dieksekusi di mainnet.",
   "",
   `- Mint SKAL v2: \`${result.mint}\` ([Solscan](https://solscan.io/token/${result.mint}))`,
+  `- Jatah pembuat 14%: ${result.creatorShare}`,
   `- Pool Meteora: \`${result.pool}\`, LP 100% terkunci`,
   `- Tanda tangan: ${[...result.launchSignatures, result.poolSignature].map((s) => `\`${s}\``).join(", ")}`,
   `- Biaya: ${result.costSol.toFixed(6)} SOL`,

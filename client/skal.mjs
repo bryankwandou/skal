@@ -80,11 +80,14 @@ export async function launchTxs(connection, { wallet, mint, vaultProgram, name, 
   const total = supply * UNIT;
   const vested = (total * BigInt(vestedShareBps)) / 10_000n;
   const walletAta = getAssociatedTokenAddressSync(mint.publicKey, wallet, false, TOKEN_2022_PROGRAM_ID);
-  const v = vaultAddresses(vaultProgram, mint.publicKey, walletAta, vested, start, end);
+  // vestedShareBps 0 = tanpa vault: seluruh supply ke wallet, jatah pembuat tidak dikunci.
+  const v = vested > 0n ? vaultAddresses(vaultProgram, mint.publicKey, walletAta, vested, start, end) : null;
   const tx2 = new Transaction().add(
     createAssociatedTokenAccountIdempotentInstruction(wallet, walletAta, wallet, mint.publicKey, TOKEN_2022_PROGRAM_ID),
-    createAssociatedTokenAccountIdempotentInstruction(wallet, v.vaultToken, v.pda, mint.publicKey, TOKEN_2022_PROGRAM_ID),
-    createMintToCheckedInstruction(mint.publicKey, v.vaultToken, wallet, vested, DECIMALS, [], TOKEN_2022_PROGRAM_ID),
+    ...(v ? [
+      createAssociatedTokenAccountIdempotentInstruction(wallet, v.vaultToken, v.pda, mint.publicKey, TOKEN_2022_PROGRAM_ID),
+      createMintToCheckedInstruction(mint.publicKey, v.vaultToken, wallet, vested, DECIMALS, [], TOKEN_2022_PROGRAM_ID),
+    ] : []),
     createMintToCheckedInstruction(mint.publicKey, walletAta, wallet, total - vested, DECIMALS, [], TOKEN_2022_PROGRAM_ID),
     createSetAuthorityInstruction(mint.publicKey, wallet, AuthorityType.MintTokens, null, [], TOKEN_2022_PROGRAM_ID),
   );

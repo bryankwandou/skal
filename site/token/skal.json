@@ -1,7 +1,7 @@
 {
   "name": "Save Kalimantan",
   "symbol": "SKAL",
-  "description": "Educational Token-2022 asset on Solana. Fixed supply, no mint or freeze authority, creator share held by an immutable vesting vault, pool liquidity permanently locked. Not an investment.",
+  "description": "Educational Token-2022 asset on Solana. Fixed supply, no mint or freeze authority, pool liquidity permanently locked. The creator's 14% share is not locked. Not an investment.",
   "image": "https://savekalimantan.vercel.app/token/logo.png",
   "external_url": "https://savekalimantan.vercel.app",
   "properties": {
