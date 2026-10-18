@@ -1,13 +1,15 @@
 // Eksekusi proposal SKAL v2 (relaunch dengan logo) setelah masa komentar 24 jam.
 // node relaunch.mjs <issue-number> [--dry]
 // Berjalan hanya jika: issue masih open, tidak berlabel "rejected", 👎 tidak lebih banyak dari 👍,
-// dan saldo deployer >= 0,0240 SOL. Hasilnya dikomentari ke issue. Hanya bisa sukses sekali.
-import { Connection } from "@solana/web3.js";
+// dan saldo deployer >= 0,0240 SOL. Dana berasal dari fee trading pool v1: fee diklaim dulu ke deployer.
+// Hasilnya dikomentari ke issue. Aman dijalankan berulang (misalnya harian); hanya bisa sukses sekali.
+import { Connection, PublicKey } from "@solana/web3.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { loadKeypair } from "./skal.mjs";
+import { claimFees } from "./claim-fees.mjs";
 
 const [issue, flag] = process.argv.slice(2);
 const dry = flag === "--dry";
@@ -18,6 +20,10 @@ const VAULT = "5eaxtobwFbmwEVzdmfVbJ5Zz1PVyyZ3queCJkkVAccLZ";
 const URI = "https://savekalimantan.vercel.app/token/skal.json";
 const NEED_LAMPORTS = 24_000_000;
 const DONE = "relaunch.done.json";
+const STATE = "relaunch.state.json";
+const V1_POOL = new PublicKey("9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe");
+// Bagian fee yang diterima posisi per SOL volume: 1% fee dikurangi bagian Meteora, diukur dari pembelian pertama.
+const LP_FEE_PER_SOL = 0.0082;
 
 const gh = (...a) => execFileSync("gh", a, { encoding: "utf8" }).trim();
 const comment = (body) => (dry ? console.log(`[dry] comment:\n${body}`) : gh("issue", "comment", issue, "-R", REPO, "--body", body));
@@ -35,17 +41,36 @@ if (Date.now() < opensAt) {
 }
 const up = it.reactions["+1"], down = it.reactions["-1"];
 const rejected = it.labels.some((l) => l.name === "rejected");
-const wallet = loadKeypair(WALLET).publicKey;
-const balance = await new Connection(RPC, "confirmed").getBalance(wallet);
-const status = { issueState: it.state, rejected, up, down, balanceSol: balance / 1e9, needSol: NEED_LAMPORTS / 1e9 };
-console.log(status);
-
 if (it.state !== "open" || rejected || down > up) {
   comment(`Proposal tidak dieksekusi: ${it.state !== "open" ? "issue sudah ditutup" : rejected ? "berlabel rejected" : `👎 ${down} lebih banyak dari 👍 ${up}`}. Tidak ada transaksi yang dikirim.`);
+  if (!dry) writeFileSync(DONE, JSON.stringify({ rejectedAt: new Date().toISOString(), up, down, state: it.state }, null, 2));
   process.exit(0);
 }
+const signer = loadKeypair(WALLET), wallet = signer.publicKey;
+const connection = new Connection(RPC, "confirmed");
+const fees = await claimFees(connection, signer, V1_POOL, !dry);
+const balance = await connection.getBalance(wallet);
+const funds = balance + (fees.signatures.length ? 0 : Math.round(fees.claimableSol * 1e9));
+const status = { issueState: it.state, rejected, up, down, balanceSol: balance / 1e9, unclaimedFeeSol: fees.signatures.length ? 0 : fees.claimableSol, feeClaims: fees.signatures, needSol: NEED_LAMPORTS / 1e9 };
+console.log(status);
+
 if (balance < NEED_LAMPORTS) {
-  comment(`Masa komentar selesai tanpa keberatan (👍 ${up}, 👎 ${down}), tapi saldo deployer \`${wallet.toBase58()}\` baru ${balance / 1e9} SOL dari ${NEED_LAMPORTS / 1e9} SOL yang dibutuhkan. Tidak ada transaksi yang dikirim. Eksekusi dijalankan ulang setelah dana masuk.`);
+  // Komentar hanya saat pertama kali atau saat dana bertambah, supaya eksekusi harian tidak membanjiri issue.
+  const last = existsSync(STATE) ? JSON.parse(readFileSync(STATE, "utf8")).fundsLamports : -1;
+  if (funds > last) {
+    const missing = (NEED_LAMPORTS - funds) / 1e9;
+    comment([
+      `Masa komentar selesai tanpa keberatan (👍 ${up}, 👎 ${down}). Proposal disetujui dan menunggu dana dari fee trading.`,
+      "",
+      `- Saldo deployer \`${wallet.toBase58()}\`: ${balance / 1e9} SOL`,
+      `- Fee pool v1 yang belum diklaim: ${status.unclaimedFeeSol} SOL (diklaim otomatis mulai ${fees.minClaimSol} SOL)`,
+      ...fees.signatures.map((s) => `- Fee diklaim: \`${s}\``),
+      `- Kurang: ${missing.toFixed(6)} SOL, setara volume trading sekitar ${(missing / LP_FEE_PER_SOL).toFixed(2)} SOL di pool v1`,
+      "",
+      "Tidak ada transaksi peluncuran yang dikirim. Pemeriksaan berjalan setiap hari dan v2 diluncurkan begitu dana cukup.",
+    ].join("\n"));
+    if (!dry) writeFileSync(STATE, JSON.stringify({ checkedAt: new Date().toISOString(), fundsLamports: funds }, null, 2));
+  }
   process.exit(0);
 }
 if (dry) { console.log("[dry] semua syarat terpenuhi; berhenti sebelum transaksi."); process.exit(0); }
