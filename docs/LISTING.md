@@ -34,3 +34,10 @@ Metadata on-chain SKAL v1 terkunci dengan URI kosong, jadi wallet yang hanya mem
 1. ~~Email kontak~~: `nayrbryanGaming02@gmail.com`, sudah tercantum di footer situs.
 2. ~~Akun sosial~~: X `@savekalimantan`, tercantum di footer situs.
 3. **Pengiriman formulir** dilakukan pemilik proyek atau atas izinnya, karena memuat data kontak.
+
+## Riwayat pengajuan
+
+| Tanggal | Tempat | Token | Status |
+|---|---|---|---|
+| 2026-10-18 | Solscan, Social Links & Logo Update | v2 `HhBd…sPc4` | Terkirim, menunggu tinjauan |
+| 2026-10-18 | Solscan, Social Links & Logo Update | v1 `5nyS…npmS` | Terkirim, menunggu tinjauan (logo hanya tampil di Solscan, wallet tetap "?") |
