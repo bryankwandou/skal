@@ -25,7 +25,13 @@ const V1_POOL = new PublicKey("9oejCQAKdkkVWCeqDvLYYsTqT8KQLf9sMebcfF5YPWRe");
 // Bagian fee yang diterima posisi per SOL volume: 1% fee dikurangi bagian Meteora, diukur dari pembelian pertama.
 const LP_FEE_PER_SOL = 0.0082;
 
-const gh = (...a) => execFileSync("gh", a, { encoding: "utf8" }).trim();
+// Koneksi ke api.github.com dari mesin ini kadang timeout saat TLS handshake; coba sampai 4 kali.
+const gh = (...a) => {
+  for (let i = 1; ; i++) {
+    try { return execFileSync("gh", a, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim(); }
+    catch (e) { if (i === 4 || !/timeout|EOF|connection/i.test(String(e.stderr))) throw e; }
+  }
+};
 const comment = (body) => (dry ? console.log(`[dry] comment:\n${body}`) : gh("issue", "comment", issue, "-R", REPO, "--body", body));
 const node = (...a) => execFileSync(process.execPath, a, { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] });
 const newest = (prefix, before) => readdirSync(".").filter((f) => f.startsWith(prefix) && f.endsWith(".json") && !before.includes(f));
